@@ -1,0 +1,4 @@
+[01-Jul-2020 10:12:53 America/New_York] PHP Notice:  Undefined offset: 0 in /home/sporylzm/naicash.diimtech.com/core/mail/test/test_callback.php on line 27
+[01-Jul-2020 10:12:53 America/New_York] PHP Notice:  Undefined offset: 0 in /home/sporylzm/naicash.diimtech.com/core/mail/test/test_callback.php on line 28
+[03-Jul-2020 03:43:55 America/New_York] PHP Warning:  require(PHPUnit/Framework.php): failed to open stream: No such file or directory in /home/sporylzm/naicash.diimtech.com/core/mail/test/phpmailerTest.php on line 16
+[03-Jul-2020 03:43:55 America/New_York] PHP Fatal error:  require(): Failed opening required 'PHPUnit/Framework.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/sporylzm/naicash.diimtech.com/core/mail/test/phpmailerTest.php on line 16

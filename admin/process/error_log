@@ -1,0 +1,31 @@
+[30-Mar-2021 04:32:41 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
+[30-Mar-2021 04:33:28 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
+[30-Mar-2021 04:33:36 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
+[02-Apr-2021 12:21:36 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
+[02-Apr-2021 12:21:45 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
+[23-Apr-2021 17:45:10 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
+[25-Apr-2021 05:56:59 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
+[25-Apr-2021 05:57:07 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
+[25-Apr-2021 16:18:43 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
+[25-Apr-2021 16:18:53 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
+[02-May-2021 22:15:19 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
+[24-May-2021 14:27:13 America/New_York] PHP Warning:  require(mail/class.phpmailer.php): failed to open stream: No such file or directory in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:27:13 America/New_York] PHP Fatal error:  require(): Failed opening required 'mail/class.phpmailer.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:27:21 America/New_York] PHP Warning:  require(mail/class.phpmailer.php): failed to open stream: No such file or directory in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:27:21 America/New_York] PHP Fatal error:  require(): Failed opening required 'mail/class.phpmailer.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:27:35 America/New_York] PHP Warning:  require(mail/class.phpmailer.php): failed to open stream: No such file or directory in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:27:35 America/New_York] PHP Fatal error:  require(): Failed opening required 'mail/class.phpmailer.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:27:50 America/New_York] PHP Warning:  require(mail/class.phpmailer.php): failed to open stream: No such file or directory in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:27:50 America/New_York] PHP Fatal error:  require(): Failed opening required 'mail/class.phpmailer.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:28:00 America/New_York] PHP Warning:  require(mail/class.phpmailer.php): failed to open stream: No such file or directory in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:28:00 America/New_York] PHP Fatal error:  require(): Failed opening required 'mail/class.phpmailer.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:28:29 America/New_York] PHP Warning:  require(mail/class.phpmailer.php): failed to open stream: No such file or directory in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:28:29 America/New_York] PHP Fatal error:  require(): Failed opening required 'mail/class.phpmailer.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:28:46 America/New_York] PHP Warning:  require(mail/class.phpmailer.php): failed to open stream: No such file or directory in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:28:46 America/New_York] PHP Fatal error:  require(): Failed opening required 'mail/class.phpmailer.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:28:55 America/New_York] PHP Warning:  require(mail/class.phpmailer.php): failed to open stream: No such file or directory in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:28:55 America/New_York] PHP Fatal error:  require(): Failed opening required 'mail/class.phpmailer.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:29:03 America/New_York] PHP Warning:  require(mail/class.phpmailer.php): failed to open stream: No such file or directory in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[24-May-2021 14:29:03 America/New_York] PHP Fatal error:  require(): Failed opening required 'mail/class.phpmailer.php' (include_path='.:/opt/alt/php72/usr/share/pear') in /home/sporylzm/porlt.diimtech.com/admin/process/activate_user.php on line 5
+[26-May-2021 06:58:29 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
+[26-May-2021 06:58:44 America/New_York] PHP Notice:  Undefined variable: name in /home/sporylzm/porlt.diimtech.com/admin/process/login.php on line 50
