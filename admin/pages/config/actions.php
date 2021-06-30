@@ -128,4 +128,21 @@
         $result = $stmt->fetch();
         return $result;
     }
+
+    function deleteDestinationArea($conn, $id)
+    {
+        $sql = "DELETE FROM des_area WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id'=>$id]);
+        return true;
+    }
+
+
+    function deletePickupArea($conn, $id)
+    {
+        $sql = "DELETE FROM pickup_area WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id'=>$id]);
+        return true;
+    }
 ?>

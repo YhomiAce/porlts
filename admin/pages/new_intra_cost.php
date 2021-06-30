@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if(isset($_POST['submit']))
 {
 include 'config/config.php';
@@ -115,7 +118,7 @@ window.location = "?p=intra_costs";
 <form action="#" method="post" enctype="multipart/form-data">
  <table class="table dtable-striped dtable-hover no-head-border">
                     
-<tr><td><td style="color: green; font-size: 15px;"><?php echo $up_error; ?></td></tr>
+<tr><td><td style="color: green; font-size: 15px;"></td></tr>
     <tr><td style="width: 30%; font-size: 16px;">City<td>
       <select type="text" name="state" required="required" style="width: 100%; height: 40px;">
          <?php

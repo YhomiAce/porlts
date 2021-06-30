@@ -12,3 +12,5 @@
 <script src="dist/js/demo.js"></script>
 <!-- DataTables -->
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.23/datatables.min.js"></script>
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

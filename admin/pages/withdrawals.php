@@ -21,7 +21,7 @@
 
           <!-- small box -->
         
-         <h4 style="color: green; font-weight: bold;"> <?php echo $up_error; ?></h4>
+         <h4 style="color: green; font-weight: bold;"></h4>
           <div style="dborder: solid; border-width: thin; border-color: #ccc; margin-top: 0px; padding: 1.5em; dheight: 500px; ">
        <div style="margin: 20px; margin-top: 0px;">
         <form method="get" action="#">
@@ -44,6 +44,8 @@
 
 
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require 'config/config.php';
 $sql=$con->query("SELECT * FROM withdrawal WHERE status = 'New' ORDER BY id DESC LIMIT 0, 200") or die("Error2 : ". mysqli_error($con));
 
@@ -55,41 +57,35 @@ $sql=$con->query("SELECT * FROM withdrawal WHERE status = 'New'   ORDER BY id DE
 
  $i=1;
    
-  while ($rows=mysqli_fetch_array($sql))
-   {
-    $id=$rows['id'];
-    $user=$rows['user'];
-    $amount=number_format($rows['amount']);
-    $trans_ref=$rows['trans_ref'];
-    $trans_id=$rows['trans_id'];
-    $account=$rows['account'];
-    $acc_num=$rows['acc_num'];
-    $merchant = $rows['merchant'];
-    $prev_bal = number_format($rows['prev_bal']);
-    $new_bal =    number_format($rows['new_bal']);
-    $trans_type = $rows['trans_type'];
-    $method = $rows['method'];
-    $details = $rows['details'];
+  // while ($rows=mysqli_fetch_array($sql))
+  //  {
+  //   $id=$rows['id'];
+  //   $user=$rows['user'];
+  //   $amount=number_format($rows['amount']);
+  //   $trans_ref=$rows['trans_ref'];
+  //   $trans_id=$rows['trans_id'];
+  //   $account=$rows['account'];
+  //   $acc_num=$rows['acc_num'];
+  //   $merchant = $rows['merchant'];
+  //   $prev_bal = number_format($rows['prev_bal']);
+  //   $new_bal =    number_format($rows['new_bal']);
+  //   $trans_type = $rows['trans_type'];
+  //   $method = $rows['method'];
+  //   $details = $rows['details'];
     
-    $address = $rows['address'];
-    $code = $rows['code'];
-    $status = $rows['status'];
-    $date_t =$rows['date_t'];
+  //   $address = $rows['address'];
+  //   $code = $rows['code'];
+  //   $status = $rows['status'];
+  //   $date_t =$rows['date_t'];
      
     
-   $sqlx=$con->query("SELECT * FROM users WHERE phone = '$user'") or die("Error2 : ". mysqli_error($con));
-   $rowsx=mysqli_fetch_array($sqlx);
-   $id=$rowsx['id'];
-   $fulname=$rowsx['fulname'];
+  //  $sqlx=$con->query("SELECT * FROM users WHERE phone = '$user'") or die("Error2 : ". mysqli_error($con));
+  //  $rowsx=mysqli_fetch_array($sqlx);
+  //  $id=$rowsx['id'];
+  //  $fulname=$rowsx['fulname'];
 ?>
 
-<tr><td style="border: solid; border-width: thin; border-color: #eee;"><?php echo $i; ?><td style="border: solid; border-width: thin; border-color: #eee;"><?php  echo $fulname; ?><td style="border: solid; border-width: thin; border-color: #eee;"><?php echo $user; ?><td style="border: solid; border-width: thin; border-color: #eee;">&#8358;<?php echo $amount; ?><td style="border: solid; border-width: thin; border-color: #eee;"><?php echo $trans_type; ?><td style="border: solid; border-width: thin; border-color: #eee;">
-<?php echo $method; ?>  <td style="border: solid; border-width: thin; border-color: #eee;">&#8358;<?php echo $prev_bal; ?><td style="border: solid; border-width: thin; border-color: #eee;">&#8358;<?php echo $new_bal; ?> </td><td style="border: solid; border-width: thin; border-color: #eee;"> <?php echo $status; ?> </td></td></td></td></tr>
 
-<?php
-$i++;
-}
-?>
 
  
         </div>

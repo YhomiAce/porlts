@@ -21,7 +21,7 @@
 
           <!-- small box -->
           
-         <h4 style="color: green; font-weight: bold;"> <?php echo $up_error; ?></h4>
+         <h4 style="color: green; font-weight: bold;"></h4>
           <div style="dborder: solid; border-width: thin; border-color: #ccc; margin-top: 0px; padding: 1.5em; dheight: 500px; ">
        
 <div style="margin: 20px; margin-top: 0px;">
@@ -38,7 +38,8 @@
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Delete</th>
 <?php
 require 'config/config.php';
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 
 $sql=$con->query("SELECT * FROM pickup_cities ORDER BY id DESC LIMIT 0,500") or die("Error2 : ". mysqli_error($con));

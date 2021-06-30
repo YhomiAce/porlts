@@ -65,6 +65,8 @@ window.location = "?p=inter_costs";
 <form action="#" method="post" enctype="multipart/form-data">
 
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require 'config/config.php';
 $id = $_GET['id'];
 $sql=$con->query("SELECT * FROM inter_cost WHERE id = '$id'") or die("Error2 : ". mysqli_error($con));
@@ -97,7 +99,7 @@ $sql=$con->query("SELECT * FROM inter_cost WHERE id = '$id'") or die("Error2 : "
   <input type="hidden" name="id" value="<?php echo $id; ?>">
  <table class="table dtable-striped dtable-hover no-head-border">
                     
-<tr><td><td style="color: green; font-size: 15px;"><?php echo $up_error; ?></td></tr>
+<tr><td><td style="color: green; font-size: 15px;"></td></tr>
     <tr><td style="width: 30%; font-size: 16px;">City1<td>
       <select type="text" name="state" required="required" style="width: 100%; height: 40px;">
         <option><?php echo $state1; ?></option>

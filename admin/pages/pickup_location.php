@@ -7,6 +7,9 @@
       <h2 style="margin-top: 0px;">
       
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
     require_once 'config/conn.php';
     require_once 'config/actions.php';
     $stateId = $_GET['stateId'];
@@ -32,14 +35,14 @@
           <!-- small box -->
           <!-- <a href="add_product.php"><button style="background-color: #0060cc; height: 40px; width: 250px; border:none; border-radius: 5px; color: white; font-size: 16px;">ADD PRODUCT</button></a> -->
       
-         <h4 style="color: green; font-weight: bold;"> <?php echo $up_error; ?></h4>
+         <h4 style="color: green; font-weight: bold;"> </h4>
           <div style="dborder: solid; border-width: thin; border-color: #ccc; margin-top: 0px; padding: 1.5em; dheight: 500px; ">
        
           <div style="margin: 20px; margin-top: 0px;">
                 <form method="get" action="">
                     <input type="hidden" name="p" value="pickup_location">
                     <input type="hidden" name="stateId" value="<?= $stateId; ?>">
-                    <input type="text" name="q" value="<?php echo $_GET['q']; ?>" placeholder="Search For a Location" style="height: 30px; font-size: 15px; padding: 15px; width: 80%; border:solid; border-color: #cccccc;"> 
+                    <input type="text" name="q" placeholder="Search For a Location" style="height: 30px; font-size: 15px; padding: 15px; width: 80%; border:solid; border-color: #cccccc;"> 
                 </form>
             </div>
 
@@ -71,7 +74,7 @@
         <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $area['area']; ?></td>
         <td style="border:solid; border-width: thin; border-color: #eee;"><?= $area['post_code']; ?></a></td>
         <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo date('d-M-Y',strtotime('+0 days',strtotime(str_replace('/', '-', $area['created_at'])))); ?></td>
-        <td style="border:solid; border-width: thin; border-color: #eee;"><button class="btn btn-primary" onclick="del_des_city('<?php echo $area['id']; ?>')">Delete</button></td>
+        <td style="border:solid; border-width: thin; border-color: #eee;"><button class="btn btn-primary deletePickup" id="<?php echo $area['id']; ?>">Delete</button></td>
 
     </tr>
 
@@ -80,53 +83,7 @@
 </table>
 
 
-<script type="text/javascript">
-function del_des_city(id)
-{
 
-var r = confirm ("Do you want to Delete this City?");
-
-if (r == true) {
-var dataString='id='+id;
-$.ajax({
-type:"GET",
-url:"process/del_des_city.php",
-data:dataString,
-jsonp:"callback",
-jsonpCallback:"Sverify",
-dataType:"jsonp",
-crossDomain:true,
-success: function(data){
-var success = data.success;
-if(success == "Yes")
-{
-//alert("Category Deleted Successfully!");
-window.location = "?p=des_cities";
-}
-else if (success = "No")
-{
- alert("An error Occured!");
-}
-},
-beforeSend:function()
-{
-$('#loader').fadeOut(200).show();
-},
-error: function(jqXHR, textStatus, errorThrown)
-{
-    alert ("Could not connect to server");
-    //$('#in').fadeOut(200).hide();
-
-    }
-
-
-});} else {
-}
-
-
- 
-}
-</script>
 
         </div>
         </div>
@@ -156,7 +113,42 @@ error: function(jqXHR, textStatus, errorThrown)
 <!-- ./wrapper -->
 
    
-<?php include('includes/js.php')?>
+<?php include('core/includes/js.php')?>
+
+<script>
+  $('body').on('click','.deletePickup',function(e){
+                e.preventDefault()
+                var del_id = $(this).attr('id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url:'pages/config/controller.php',
+                            method:'post',
+                            data:{deletePickup:del_id},
+                            success:(res)=>{
+                                Swal.fire(
+                                'Deleted!',
+                                'Note Deleted Successfully',
+                                'success'
+                                )
+                                location.reload()
+                                
+                            }
+                        })
+                        
+                    }
+                })
+                
+            })
+</script>
 </body>
 </html>
 

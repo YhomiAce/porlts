@@ -6,6 +6,9 @@
       <div class="col-md-4">
       <h2 style="margin-top: 0px;">
         <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require 'config/config.php';
 require_once 'config/conn.php';
 require_once 'config/actions.php';
@@ -30,13 +33,13 @@ $count = mysqli_num_rows($sql);
           <!-- small box -->
           <!-- <a href="add_product.php"><button style="background-color: #0060cc; height: 40px; width: 250px; border:none; border-radius: 5px; color: white; font-size: 16px;">ADD PRODUCT</button></a> -->
       
-         <h4 style="color: green; font-weight: bold;"> <?php echo $up_error; ?></h4>
+         <h4 style="color: green; font-weight: bold;"> </h4>
           <div style="dborder: solid; border-width: thin; border-color: #ccc; margin-top: 0px; padding: 1.5em; dheight: 500px; ">
        
 <div style="margin: 20px; margin-top: 0px;">
         <form method="get" action="">
           <input type="hidden" name="p" value="pickup_cities">
-        <input type="text" name="q" value="<?php echo $_GET['q']; ?>" placeholder="Search For a City" style="height: 30px; font-size: 15px; padding: 15px; width: 80%; border:solid; border-color: #cccccc;"> 
+        <input type="text" name="q" placeholder="Search For a City" style="height: 30px; font-size: 15px; padding: 15px; width: 80%; border:solid; border-color: #cccccc;"> 
        </form>
      </div>
 
@@ -157,7 +160,7 @@ error: function(jqXHR, textStatus, errorThrown)
 <!-- ./wrapper -->
 
    
-<?php include('includes/js.php')?>
+<?php include('core/includes/js.php')?>
 </body>
 </html>
 

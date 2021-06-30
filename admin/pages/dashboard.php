@@ -25,7 +25,10 @@
           <div class="small-box bg-orange">
             <div class="inner">
   
-          <?php
+   <?php
+   error_reporting(E_ALL);
+   ini_set('display_errors', 1);
+   
       require 'config/config.php';
      $sql2=$con->query("SELECT * FROM  porlt_users") or die("Error2 : ". mysqli_error($con));
       $count2 = mysqli_num_rows($sql2);

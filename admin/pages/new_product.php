@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if(isset($_POST['submit']))
 {
 include 'config/config.php';
@@ -106,13 +109,13 @@ require 'process/get_product_categories.php';
           <!-- small box -->
           <!-- <a href="add_product.php"><button style="background-color: #0060cc; height: 40px; width: 250px; border:none; border-radius: 5px; color: white; font-size: 16px;">ADD PRODUCT</button></a> -->
       
-        <!-- <h4 style="color: green; text-align: center; font-weight: bold;"> <?php echo $up_error; ?></h4>-->
+        <!-- <h4 style="color: green; text-align: center; font-weight: bold;"> </h4>-->
           <div style="dborder: solid; border-width: thin; border-color: #ccc; margin-top: 0px; padding: 1.5em; dheight: 500px; ">
        
 <form action="#" method="post" enctype="multipart/form-data">
  <table class="table dtable-striped dtable-hover no-head-border">
                     
-<tr><td><td style="color: green; font-weight: 600; font-size: 16px;"><?php echo $up_error; ?></td></tr>
+<tr><td><td style="color: green; font-weight: 600; font-size: 16px;"></td></tr>
 
 
 <tr><td style="width: 30%;">Vendor <td><select name="vendor" drequired="required" style="width: 100%; height: 40px;"><option value="">Select Vendor</option><?php echo get_vendor(); ?></select> </td></td>

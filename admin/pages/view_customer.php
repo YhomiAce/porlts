@@ -23,7 +23,7 @@
           <!-- small box -->
           <!-- <a href="add_product.php"><button style="background-color: #0060cc; height: 40px; width: 250px; border:none; border-radius: 5px; color: white; font-size: 16px;">ADD PRODUCT</button></a> -->
       
-         <h4 style="color: green; font-weight: bold;"> <?php echo $up_error; ?></h4>
+         <h4 style="color: green; font-weight: bold;"> </h4>
           <div style="dborder: solid; border-width: thin; border-color: #ccc; margin-top: 0px; padding: 1.5em; dheight: 500px; ">
       
 <table class="table dtable-striped table-hover no-head-border" border="1" style="border:solid; border-color: black; font-size: 15px; border-width: thin;">
@@ -36,6 +36,9 @@
 <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Action</th>
 <!-- <th style="border:solid; border-width: thin; border-color: #eee;">Delete</th>-->
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require 'config/config.php';
 
 
