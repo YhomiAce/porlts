@@ -22,4 +22,84 @@
         deletePickupArea($conn, $id);
     }
 
+    if (isset($_GET['changeState'])) {
+        $stateId =$_GET['changeState'];
+        $results = fetchAllDestinationStateAreas($conn, $stateId);
+        $output ="";
+        if($results){
+            $output .='
+            <label for="">Select Origin Area</label>
+            <select name="origin" id="origin" class="form-control" required >
+              <option value="" selected disabled>Select Origin Area</option>';
+            foreach($results as $key=>$row){
+                $output .='<option value="'.$row['id'].'">'.$row['area'].': PostalCode('.$row['post_code'].')</option>';
+            }
+            $output .='</select>
+            </div>';
+            echo $output;
+        }else{
+            echo '<h6 class="text-secondary text-center">You have not add Areas for this state! <a href="?p=destination_area">Click To add Area</a> </h6>';
+        }
+    }
+
+    if (isset($_POST['changeStateDestination'])) {
+        $stateId =$_POST['changeStateDestination'];
+        $results = fetchAllDestinationStateAreas($conn, $stateId);
+        $output ="";
+        if($results){
+            $output .='
+            <label for="">Select Destination Area</label>
+            <select name="destination" id="destination" class="form-control" required >
+              <option value="" selected disabled>Select Destination Area</option>';
+            foreach($results as $key=>$row){
+                $output .='<option value="'.$row['id'].'">'.$row['area'].': PostalCode('.$row['post_code'].')</option>';
+            }
+            $output .='</select>
+            </div>';
+            echo $output;
+        }else{
+            echo '<h6 class="text-secondary text-center">You have not add Areas for this state! <a href="?p=destination_area">Click To add Area</a> </h6>';
+        }
+    }
+
+    if (isset($_POST['action']) && $_POST['action'] == "Add_Intra_State_Cost") {
+        // print_r($_POST);
+        $stateId = $_POST['state'];
+        $originId = $_POST['origin'];
+        $destinationId = $_POST['destination'];
+        $kgId = $_POST['kg'];
+        $cost = $_POST['cost'];
+        $discount = $_POST['discount'];
+        $earned = $_POST['earned'];
+        $insurance = $_POST['insurance'];
+
+        $stateDetails = destinationDetails($conn, $stateId);
+        $state = $stateDetails['cities'];
+
+        $kgDetails = weightDetails($conn, $kgId);
+        $kg = $kgDetails['kg'];
+
+        $ori = destinationAreaDetails($conn, $originId);
+        $origin = $ori['area'];
+        $origin_code = $ori['post_code'];
+
+        $des = destinationAreaDetails($conn, $destinationId);
+        $destination = $des['area'];
+        $destination_code = $des['post_code'];
+        
+        $save = createIntraStateCost($conn, $state, $origin, $origin_code, $destination, $destination_code, $kg, $cost, $discount, $earned, $insurance);
+        
+        if ($save) {
+            echo "success";
+        }else{
+            echo "fail";
+        }
+    }
+
+    if (isset($_POST['deleteIntraCost'])) {
+        $id =$_POST['deleteIntraCost'];
+        deleteIntraCost($conn, $id);
+    }
+
+
 ?>

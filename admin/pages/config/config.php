@@ -5,7 +5,7 @@
 // $password="6969"; //mysql password
 // $db_name="sporylzm_porlt"; //Database name
 
-  // Heroku
+//   // Heroku
   $host = "us-cdbr-east-04.cleardb.com";
   $db_name = "heroku_f4565c2e7db9247";
   $username = "be2ec2be0cee8b";

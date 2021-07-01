@@ -15,6 +15,14 @@
         </div>';
     }
 
+    function fetchAllWeight($conn) {
+        $sql = "SELECT * FROM kg_range";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+    
     function fetchAllPickupState($conn) {
         $sql = "SELECT * FROM pickup_cities";
         $stmt = $conn->prepare($sql);
@@ -122,7 +130,7 @@
     }
 
     function pickupDetails($conn, $stateId) {
-        $sql = "SELECT * FROM des_cities WHERE id = ?";
+        $sql = "SELECT * FROM pickup_cities WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$stateId]);
         $result = $stmt->fetch();
@@ -141,6 +149,59 @@
     function deletePickupArea($conn, $id)
     {
         $sql = "DELETE FROM pickup_area WHERE id=:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id'=>$id]);
+        return true;
+    }
+
+    function destinationAreaDetails($conn, $id) {
+        $sql = "SELECT * FROM des_area WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetch();
+        return $result;
+    }
+
+    function weightDetails($conn, $id) {
+        $sql = "SELECT * FROM kg_range WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetch();
+        return $result;
+    }
+
+    function createIntraStateCost($conn, $state, $origin, $origin_code, $destination, $destination_code, $kg, $cost, $discount, $earned, $insurance)
+    {
+        $sql = "INSERT INTO intra_cost ( state, origin, origin_post_code, destination, destination_post_code, kg, cost, discount, multiplier, earned, insurance) VALUES(:state, :origin, :origin_code, :destination, :destination_code, :kg, :cost, :discount, '', :earned, :insurance)";
+        $stmt = $conn->prepare($sql);
+        
+        $stmt->execute([
+            "state"=>$state,
+            "origin"=>$origin,
+            "origin_code"=>$origin_code,
+            "destination"=>$destination,
+            "destination_code"=>$destination_code,
+            "kg"=>$kg,
+            "cost"=>$cost,
+            "discount"=>$discount,
+            "earned"=>$earned,
+            "insurance"=>$insurance
+        ]);
+        
+        return true;
+    }
+
+    function fetchAllIntraStateCosts($conn) {
+        $sql = "SELECT * FROM intra_cost";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
+    function deleteIntraCost($conn, $id)
+    {
+        $sql = "DELETE FROM intra_cost WHERE id=:id";
         $stmt = $conn->prepare($sql);
         $stmt->execute(['id'=>$id]);
         return true;

@@ -34,106 +34,57 @@
 
 <table class="table dtable-striped table-hover no-head-border" border="1" style="border:solid; border-color: black; border-width: thin;">
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">NO</th>
- <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Cities</th>
- <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Kg</th>
+ <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">State</th>
+ <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Origin</th>
+ <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Post Code</th>
+ <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Destination</th>
+ <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Post Code</th>
+ <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Weight(Kg)</th>
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Cost</th> 
   <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Discount</th> 
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Insurance</th> 
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Earned</th>
 
 
- <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Edit</th>
+ <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Actions</th>
 <!-- <th>Edit</th>-->
-<th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Delete</th>
+<!-- <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Delete</th> -->
 <?php
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require 'config/config.php';
-
-
-
-$sql=$con->query("SELECT * FROM intra_cost ORDER BY id DESC LIMIT 0,500") or die("Error2 : ". mysqli_error($con));
-
-
- $i=1;
-   
-  while ($rows=mysqli_fetch_array($sql))
-   {
-    $id=$rows['id'];
-    $state = $rows['state'];
-    $kg = $rows['kg'];
-    $cost = $rows['cost'];
+require 'config/conn.php';
+require 'config/actions.php';
     
-    $multiplier = $rows['multiplier'];
-    $discount=$rows['discount'];
-    $insurance=$rows['insurance'];
-    
-    
-    $date_t =$rows['date_t'];
-
-    $date_t = date('d-M-Y',strtotime('+0 days',strtotime(str_replace('/', '-', $date_t))));
-    
+$rows = fetchAllIntraStateCosts($conn);
     
 ?>
-<tr><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $i; ?><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $state; ?><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $kg; ?> <td style="border:solid; border-width: thin; border-color: #eee;">&#8358;<?php echo number_format($cost); ?> <td style="border:solid; border-width: thin; border-color: #eee;">&#8358;<?php echo number_format($discount); ?><td style="border:solid; border-width: thin; border-color: #eee;">&#8358;<?php echo number_format($insurance); ?> <td style="border:solid; border-width: thin; border-color: #eee;">&#8358;<?php echo number_format($insurance); ?><td style="border:solid; border-width: thin; border-color: #eee;"><a href="?p=edit_intra&id=<?php echo $id; ?>"> <button class="btn btn-danger">Edit</button></a></td><td style="border:solid; border-width: thin; border-color: #eee;"><button class="btn btn-danger" onclick="delete_intra_cost('<?php echo $id; ?>');">Delete</button></td></td></td></td></td></td></td></tr>
-
-<?php
-$i++;
-}
-?>
+<?php foreach($rows as $key=>$row): ?>
+<tr>
+  <td style="border:solid; border-width: thin; border-color: #eee;"><?= $key+1; ?></td>
+  <td style="border:solid; border-width: thin; border-color: #eee;"><?= $row['state']; ?></td>
+  <td style="border:solid; border-width: thin; border-color: #eee;"><?= $row['origin']; ?></td>
+  <td style="border:solid; border-width: thin; border-color: #eee;"><?= $row['origin_post_code']; ?></td>
+  <td style="border:solid; border-width: thin; border-color: #eee;"><?= $row['destination']; ?></td>
+  <td style="border:solid; border-width: thin; border-color: #eee;"><?= $row['destination_post_code']; ?></td>
+  <td style="border:solid; border-width: thin; border-color: #eee;"><?= $row['kg']; ?></td>
+  <td style="border:solid; border-width: thin; border-color: #eee;">&#8358;<?= number_format($row['cost']); ?></td>
+  <td style="border:solid; border-width: thin; border-color: #eee;">&#8358;<?= number_format($row['discount']); ?></td>
+  <td style="border:solid; border-width: thin; border-color: #eee;">&#8358;<?= number_format($row['insurance']); ?></td>
+  <td style="border:solid; border-width: thin; border-color: #eee;">&#8358;<?= number_format($row['earned']); ?></td>
+  <td style="border:solid; border-width: thin; border-color: #eee;">
+    <a href="?p=edit_intra&id=<?= $row['id']; ?>" class="text-primary" title="Edit Intra state cost"> <i class="fas fa-edit"></i></a>&nbsp;
+    <a href="#" id="<?= $row['id']; ?>" class="text-danger delIntraBtn"> <i class="fas fa-trash-alt"></i></a>
+  </td>
+ 
+</tr>
+<?php endforeach; ?>
 
 </table>
 
 
-<script type="text/javascript">
-function delete_intra_cost(id)
-{
 
-var r = confirm ("Do you want to Delete this cost?");
-
-if (r == true) {
-var dataString='id='+id;
-$.ajax({
-type:"GET",
-url:"process/delete_intra_cost.php",
-data:dataString,
-jsonp:"callback",
-jsonpCallback:"Sverify",
-dataType:"jsonp",
-crossDomain:true,
-success: function(data){
-var success = data.success;
-if(success == "Yes")
-{
-//alert("Category Deleted Successfully!");
-window.location = "?p=intra_costs";
-}
-else if (success = "No")
-{
- alert("An error Occured!");
-}
-},
-beforeSend:function()
-{
-$('#loader').fadeOut(200).show();
-},
-error: function(jqXHR, textStatus, errorThrown)
-{
-    alert ("Could not connect to server");
-    //$('#in').fadeOut(200).hide();
-
-    }
-
-
-});} else {
-}
-
-
- 
-}
-</script>
 
         </div>
         </div>
@@ -164,6 +115,41 @@ error: function(jqXHR, textStatus, errorThrown)
 
    
 <?php include('includes/js.php')?>
+
+<script>
+  $('body').on('click','.delIntraBtn',function(e){
+                e.preventDefault()
+                var del_id = $(this).attr('id');
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url:'pages/config/controller.php',
+                            method:'post',
+                            data:{deleteIntraCost:del_id},
+                            success:(res)=>{
+                                Swal.fire(
+                                'Deleted!',
+                                'Intra Cost Deleted Successfully',
+                                'success'
+                                )
+                                location.reload()
+                                
+                            }
+                        })
+                        
+                    }
+                })
+                
+            })
+</script>
 </body>
 </html>
 

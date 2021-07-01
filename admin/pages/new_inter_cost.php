@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if(isset($_POST['submit']))
 {
 include 'config/config.php';
@@ -119,8 +122,7 @@ window.location = "?p=inter_costs";
     <tr><td style="width: 30%; font-size: 16px;">City1<td>
       <select type="text" name="state" required="required" style="width: 100%; height: 40px;">
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 
      include 'config/config.php';
       $sql=$con->query("SELECT * FROM pickup_cities  ORDER BY id DESC") or die("Error2 : ". mysqli_error($con));

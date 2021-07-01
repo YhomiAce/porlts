@@ -135,7 +135,7 @@ ini_set('display_errors', 1);
                             success:(res)=>{
                                 Swal.fire(
                                 'Deleted!',
-                                'Note Deleted Successfully',
+                                'Area Deleted Successfully',
                                 'success'
                                 )
                                 location.reload()
