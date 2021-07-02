@@ -83,7 +83,7 @@ $sql=$con->query("SELECT * FROM messages WHERE status = 'New'  GROUP BY user, ms
     
     
 ?>
-<tr><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $i; ?><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $fulname; ?><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $msg_type; ?> <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $msg; ?> <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $date_t; ?><td style="border:solid; border-width: thin; border-color: #eee;"><button class="btn btn-success" onclick="view_msg('<?php echo $user; ?>', '<?php echo $_SESSION['porlt_admin']; ?>', '<?php echo $msg_type; ?>')">Repond</button></td></td></td></td></td></td></td></tr>
+<tr><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $i; ?><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $fulname; ?><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $msg_type; ?> <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $msg; ?> <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $date_t; ?><td style="border:solid; border-width: thin; border-color: #eee;"><button class="btn btn-success" onclick="view_msg('<?php echo $user; ?>', '<?php echo $_SESSION['porlt_admin']; ?>', '<?php echo $msg_type; ?>')">Respond</button></td></td></td></td></td></td></td></tr>
 
 <?php
 $i++;
