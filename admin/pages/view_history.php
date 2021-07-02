@@ -1,3 +1,7 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -5,7 +9,7 @@
      <div class="row">
       <div class="col-md-6">
       <h2 style="margin-top: 0px;">
-      	<?php
+<?php
 require 'config/config.php';
 $user =$_GET['u'];
 $sql=$con->query("SELECT * FROM drop_offs WHERE user = '$user' AND payment_status = 'Successful' ORDER BY id") or die("Error2 : ". mysqli_error($con));

@@ -1,3 +1,7 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -36,8 +40,6 @@
 <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Action</th>
 <!-- <th style="border:solid; border-width: thin; border-color: #eee;">Delete</th>-->
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
 require 'config/config.php';
 

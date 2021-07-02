@@ -33,7 +33,7 @@ window.location = "?p=kg_range";
       <h2 style="margin-top: 0px;">
        Add a New KG Range
       </h2>
-      <p><a href="?p=dashbaord"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a href="?p=discount">KG Range</a> &nbsp;&nbsp;  > &nbsp;&nbsp; <a class="active">Add a New Kg Range</a></p>
+      <p><a href="?p=dashbaord"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a href="?p=kg_range">KG Range</a> &nbsp;&nbsp;  > &nbsp;&nbsp; <a class="active">Add a New Kg Range</a></p>
     </div>
      <!--<div class="col-md-4" style="text-align: left; margin-top: 10px;">  <a href="p=new_product"> <button class="btn btn-primary" style="font-size: 16px; font-weight: 600;">Add New Category</button></a>  </div>-->
      

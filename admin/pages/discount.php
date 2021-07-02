@@ -1,4 +1,8 @@
-  <!-- Content Wrapper. Contains page content -->
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
+ <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -37,8 +41,7 @@
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Delete</th>
 <?php
 require 'config/config.php';
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 
 
 $sql=$con->query("SELECT * FROM discount ORDER BY id DESC") or die("Error2 : ". mysqli_error($con));

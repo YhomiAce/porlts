@@ -1,3 +1,7 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -40,8 +44,7 @@
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Respond</th>
 <?php
 require 'config/config.php';
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 
 
 $sql=$con->query("SELECT * FROM messages WHERE status = 'New'  GROUP BY user, msg_type  ORDER BY id ASC LIMIT 0,400") or die("Error2 : ". mysqli_error($con));
@@ -67,14 +70,13 @@ $sql=$con->query("SELECT * FROM messages WHERE status = 'New'  GROUP BY user, ms
     $date_t =$rows['date_t'];
 
 
-    if($role == "Sender")
-{
-$sqlx="SELECT * FROM porlt_users WHERE email = '$sender'";
-$resultx=$con->query($sqlx) or die ("error: Server error ".mysqli_error($con));
+    
+    $sqlx="SELECT * FROM porlt_users WHERE email = '$sender'";
+    $resultx=$con->query($sqlx) or die ("error: Server error ".mysqli_error($con));
 
-$rowsx=mysqli_fetch_array($resultx);
-$fulname = $rowsx['fulname'];
-}
+    $rowsx=mysqli_fetch_array($resultx);
+    $fulname = $rowsx['fulname'];
+  
 
 
     $date_t = date('d-M-Y',strtotime('+0 days',strtotime(str_replace('/', '-', $date_t))));

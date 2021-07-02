@@ -37,7 +37,7 @@ $count = mysqli_num_rows($sql);
 <div style="margin: 20px; margin-top: 0px;">
         <form method="get" action="#">
           <input type="hidden" name="p" value="accepted">
-        <input type="text" name="q" value="<?php echo $_GET['q']; ?>" placeholder="Search By Package ID" style="height: 30px; font-size: 15px; padding: 15px; width: 80%; border:solid; border-color: #cccccc;"> 
+        <input type="text" name="q" placeholder="Search By Package ID" style="height: 30px; font-size: 15px; padding: 15px; width: 80%; border:solid; border-color: #cccccc;"> 
        </form>
      </div>
 
@@ -71,7 +71,7 @@ $sql=$con->query("SELECT * FROM drop_offs WHERE status = 'Completed' AND payment
 if(isset($_GET['q']))
 {
 $q = $_GET['q'];
-$sql=$con->query("SELECT * FROM porlt_users WHERE parcel_id = '$q'  ORDER BY id DESC LIMIT 0, 500") or die("Error2 : ". mysqli_error($con));
+$sql=$con->query("SELECT * FROM drop_offs WHERE parcel_id = '$q'  ORDER BY id DESC LIMIT 0, 500") or die("Error2 : ". mysqli_error($con));
 }
 
  $i=1;

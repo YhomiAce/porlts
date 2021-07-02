@@ -36,7 +36,7 @@ $count = mysqli_num_rows($sql);
 <div style="margin: 20px; margin-top: 0px;">
         <form method="get" action="#">
           <input type="hidden" name="p" value="pending">
-        <input type="text" name="q" value="<?php echo $_GET['q']; ?>" placeholder="Search By Package ID" style="height: 30px; font-size: 15px; padding: 15px; width: 80%; border:solid; border-color: #cccccc;"> 
+        <input type="text" name="q" value="" placeholder="Search By Package ID" style="height: 30px; font-size: 15px; padding: 15px; width: 80%; border:solid; border-color: #cccccc;"> 
        </form>
      </div>
 
@@ -70,7 +70,7 @@ $sql=$con->query("SELECT * FROM drop_offs WHERE status = 'Pending' AND payment_s
 if(isset($_GET['q']))
 {
 $q = $_GET['q'];
-$sql=$con->query("SELECT * FROM porlt_users WHERE parcel_id = '$q'  ORDER BY id DESC LIMIT 0, 500") or die("Error2 : ". mysqli_error($con));
+$sql=$con->query("SELECT * FROM drop_offs WHERE parcel_id = '$q'  ORDER BY id DESC LIMIT 0, 500") or die("Error2 : ". mysqli_error($con));
 }
 
  $i=1;
@@ -81,7 +81,7 @@ $sql=$con->query("SELECT * FROM porlt_users WHERE parcel_id = '$q'  ORDER BY id 
     $origin_city = $rows['origin_city'];
     $des_city=$rows['des_city'];
     $sender=$rows['sender'];
-    $phone=$rows['phone'];
+    $phone= $rows['sender_phone'];
     $size=$rows['parcel_size'];
     $weight=$rows['parcel_weight'];
 

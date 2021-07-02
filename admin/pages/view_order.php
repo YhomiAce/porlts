@@ -1,3 +1,7 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper" style="min-height: 1000px;">
     <!-- Content Header (Page header) -->
@@ -26,8 +30,7 @@
        
 
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 require 'config/config.php';
 
 $inv_num=$_GET['inv'];

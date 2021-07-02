@@ -98,7 +98,7 @@ window.location = "?p=inter_costs";
       <h2 style="margin-top: 0px;">
        New Inter State Cost
       </h2>
-      <p><a href="?p=dashbaord"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a href="?p=inter-costs">Inter Cost</a> &nbsp;&nbsp;  >  &nbsp;&nbsp; <a class="active">New Inter State Cost</a></p>
+      <p><a href="?p=dashbaord"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a href="?p=inter_costs">Inter Cost</a> &nbsp;&nbsp;  >  &nbsp;&nbsp; <a class="active">New Inter State Cost</a></p>
     </div>
      <!--<div class="col-md-4" style="text-align: left; margin-top: 10px;">  <a href="p=new_product"> <button class="btn btn-primary" style="font-size: 16px; font-weight: 600;">Add New Category</button></a>  </div>-->
      

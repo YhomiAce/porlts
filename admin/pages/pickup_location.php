@@ -1,3 +1,7 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -7,8 +11,6 @@
       <h2 style="margin-top: 0px;">
       
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 
     require_once 'config/conn.php';
     require_once 'config/actions.php';

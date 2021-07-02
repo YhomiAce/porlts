@@ -1,3 +1,7 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -41,8 +45,7 @@
 
 
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 
 require 'config/config.php';
 $sql=$con->query("SELECT * FROM wallet_trans WHERE trans_type = 'WPayout' AND method = 'Transfer' AND  account = 'Ledger' AND  status = 'Completed' ORDER BY id DESC LIMIT 0, 200") or die("Error2 : ". mysqli_error($con));

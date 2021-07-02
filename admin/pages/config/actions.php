@@ -206,4 +206,58 @@
         $stmt->execute(['id'=>$id]);
         return true;
     }
+
+    function fetchIntraStateInformation($conn, $id){
+        $sql = "SELECT * FROM intra_cost WHERE id =?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetch();
+        return $result;
+    }
+
+    function updateIntraStateCost($conn,$id,$state, $origin, $origin_code, $destination, $destination_code, $kg, $cost, $discount, $earned, $insurance)
+    {
+        
+        $sql = 'UPDATE intra_cost SET state =:state, origin=:origin, origin_post_code=:origin_code,destination=:destination, destination_post_code=:destination_code, kg=:kg, cost=:cost, discount=:discount, earned=:earned, insurance=:insurance WHERE id=:id';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            "state"=>$state,
+            "origin"=>$origin,
+            "origin_code"=>$origin_code,
+            "destination"=>$destination,
+            "destination_code"=>$destination_code,
+            "kg"=>$kg,
+            "cost"=>$cost,
+            "discount"=>$discount,
+            "earned"=>$earned,
+            "insurance"=>$insurance,
+            "id"=>$id
+        ]);
+        return true;
+    
+    }
+
+    function SearchIntraState($conn, $q) {
+        $sql = "SELECT * FROM intra_cost WHERE state LIKE '%$q%' OR origin = '$q' OR destination = '$q' OR origin_post_code = '$q' OR destination_post_code = '$q' ";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    function SearchInterState($conn, $q) {
+        $sql = "SELECT * FROM inter_cost WHERE state1 LIKE '%$q%' OR state2 = '$q' ";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    function fetchAllInterStateCosts($conn) {
+        $sql = "SELECT * FROM inter_cost";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+    }
 ?>

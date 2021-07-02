@@ -1,3 +1,7 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -6,8 +10,7 @@
       <div class="col-md-6">
       <h2 style="margin-top: 0px;">
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 require 'config/config.php';
 $sql=$con->query("SELECT * FROM drop_offs WHERE status = 'Picked Up' AND payment_status = 'Successful' ORDER BY id") or die("Error2 : ". mysqli_error($con));
 $count = mysqli_num_rows($sql); 
@@ -69,7 +72,7 @@ $sql=$con->query("SELECT * FROM drop_offs WHERE status = 'Picked Up' AND payment
 if(isset($_GET['q']))
 {
 $q = $_GET['q'];
-$sql=$con->query("SELECT * FROM porlt_users WHERE parcel_id = '$q'  ORDER BY id DESC LIMIT 0, 500") or die("Error2 : ". mysqli_error($con));
+$sql=$con->query("SELECT * FROM drop_offs WHERE parcel_id = '$q'  ORDER BY id DESC LIMIT 0, 500") or die("Error2 : ". mysqli_error($con));
 }
 
  $i=1;

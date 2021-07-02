@@ -102,4 +102,32 @@
     }
 
 
+    if (isset($_POST['action']) && $_POST['action'] == "Edit_Intra_State_Cost") {
+        // print_r($_POST);
+        $state = $_POST['edit_state'];
+        $origin = $_POST['edit_origin'];
+        $origin_code = $_POST['origin_post_code'];
+        $destination_code = $_POST['destination_post_code'];
+        $destination = $_POST['edit_destination'];
+        $kgId = $_POST['edit_kg'];
+        $cost = $_POST['edit_cost'];
+        $discount = $_POST['edit_discount'];
+        $earned = $_POST['edit_earned'];
+        $insurance = $_POST['edit_insurance'];
+        $id = $_POST['id'];
+        
+        $kgDetails = weightDetails($conn, $kgId);
+        $kg = $kgDetails['kg'];
+
+        $save = updateIntraStateCost($conn,$id,$state, $origin, $origin_code, $destination, $destination_code, $kg, $cost, $discount, $earned, $insurance);
+        if ($save) {
+            echo "success";
+        }else{
+            echo "fail";
+        }
+
+        
+        
+    }
+
 ?>

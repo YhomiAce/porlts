@@ -1,3 +1,7 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+?> 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -25,12 +29,12 @@
          <h4 style="color: green; font-weight: bold;"> </h4>
           <div style="dborder: solid; border-width: thin; border-color: #ccc; margin-top: 0px; padding: 1.5em; dheight: 500px; ">
        
-<!--<div style="margin: 20px; margin-top: 0px;">
+<div style="margin: 20px; margin-top: 0px;">
         <form method="get" action="#">
-          <input type="hidden" name="p" value="customers">
-        <input type="text" name="q" value="<?php echo $_GET['q']; ?>" placeholder="Search For a City" style="height: 30px; font-size: 15px; padding: 15px; width: 80%; border:solid; border-color: #cccccc;"> 
+          <input type="hidden" name="p" value="intra_costs">
+        <input type="text" name="q" placeholder="Search For a City" style="height: 30px; font-size: 15px; padding: 15px; width: 80%; border:solid; border-color: #cccccc;"> 
        </form>
-     </div>-->
+     </div>
 
 <table class="table dtable-striped table-hover no-head-border" border="1" style="border:solid; border-color: black; border-width: thin;">
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">NO</th>
@@ -51,13 +55,16 @@
 <!-- <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Delete</th> -->
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 require 'config/conn.php';
 require 'config/actions.php';
     
 $rows = fetchAllIntraStateCosts($conn);
+if(isset($_GET['q']))
+  {
+    $q = $_GET['q'];
+    $rows = SearchIntraState($conn, $q);
+
+  } 
     
 ?>
 <?php foreach($rows as $key=>$row): ?>

@@ -1,41 +1,16 @@
 <?php
-if(isset($_POST['submit']))
-{
-include 'config/config.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-$id = $_POST['id'];
-$state = $_POST['state'];
-$kg = $_POST['kg'];
-$cost = $_POST['cost'];
+require_once 'config/conn.php';
+require_once 'config/actions.php';
 
-$discount = $_POST['discount'];
-//$multiplier = $_POST['multiplier'];
-$earned = $_POST['earned'];
-$insurance = $_POST['insurance'];
+$states = fetchAllDestinationState($conn); 
+$weights = fetchAllWeight($conn);
 
-
-
-$date_t=date("d-M-Y");
-
-
-
-if($cost1 !== "")
-{
-$sql2=$con->query("UPDATE  intra_cost  SET state = '$state', kg = '$kg', cost = '$cost',  discount = '$discount', earned = '$earned',  insurance = '$insurance', date_t = '$date_t' WHERE id = '$id'") or die("error: ".mysqli_error($con));
-}
-
-
-
-
-if($sql2)
-{
-?>
-<script type="text/javascript">
-window.location = "?p=intra_costs";
-</script>
-<?php
-}
-}
+# naira code: &#8358;
+  $id = $_GET['id'];
+  $details = fetchIntraStateInformation($conn, $id);
 ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -45,9 +20,9 @@ window.location = "?p=intra_costs";
      <div class="row">
       <div class="col-md-6">
       <h2 style="margin-top: 0px;">
-       Edit Intra State Cost
+       New Intra State Cost
       </h2>
-      <p><a href="?p=dashbaord"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a href="?p=intra-costs">Intra Cost</a> &nbsp;&nbsp;  >  &nbsp;&nbsp; <a class="active">Edit Intra State Cost</a></p>
+      <p><a href="?p=dashbaord"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a href="?p=intra_costs">Intra Cost</a> &nbsp;&nbsp;  >  &nbsp;&nbsp; <a class="active">New Intra State Cost</a></p>
     </div>
      <!--<div class="col-md-4" style="text-align: left; margin-top: 10px;">  <a href="p=new_product"> <button class="btn btn-primary" style="font-size: 16px; font-weight: 600;">Add New Category</button></a>  </div>-->
      
@@ -63,107 +38,62 @@ window.location = "?p=intra_costs";
           <!-- <a href="add_product.php"><button style="background-color: #0060cc; height: 40px; width: 250px; border:none; border-radius: 5px; color: white; font-size: 16px;">ADD PRODUCT</button></a> -->
       
           <div style="dborder: solid; border-width: thin; border-color: #ccc; margin-top: 0px; padding: 1.5em; dheight: 500px; ">
-       
-<form action="#" method="post" enctype="multipart/form-data">
-
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-require 'config/config.php';
-$id=$_GET['id'];
-
-$sql=$con->query("SELECT * FROM intra_cost WHERE id = '$id'") or die("Error2 : ". mysqli_error($con));
 
 
- $i=1;
-   
-   $rows=mysqli_fetch_array($sql);
-   
-    $id=$rows['id'];
-    $state = $rows['state'];
-    $kg = $rows['kg'];
-    $cost = $rows['cost'];
-    
-    $earned = $rows['earned'];
-    $discount=$rows['discount'];
-    $insurance=$rows['insurance'];
-    
-    
-    $date_t =$rows['date_t'];
+<form action="#" id="edit_intra_cost_form" method="post" enctype="multipart/form-data">
+<div id="errorMsg" class="text-center text-danger"></div>
+  <input type="hidden" name="id" value="<?= $details['id']; ?>">
+<div class="card bg-light">
+          <div class="card-header">
+            <h4>Edit Intra State Cost </h4>
 
-    $date_t = date('d-M-Y',strtotime('+0 days',strtotime(str_replace('/', '-', $date_t))));
-    
-    
-?>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="">State</label>
+              <input type="text" name="edit_state" value="<?= $details['state']; ?>" readonly class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">Origin Area</label>
+              <input type="hidden" name="origin_post_code" value="<?= $details['origin_post_code']; ?>">
+              <input type="text" name="edit_origin" value="<?= $details['origin']; ?>" readonly class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">Destination Area</label>
+              <input type="hidden" name="destination_post_code" value="<?= $details['destination_post_code']; ?>">
+              <input type="text" name="edit_destination" value="<?= $details['destination']; ?>" readonly class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">Choose Package Weight</label>
+              <p>Previous weight: <?= $details['kg']; ?>Kg</p>
+              <select  type="text" name="edit_kg"  required="required" class="form-control" >
+                <option value="" selected disabled>Select Weight</option>
+                  <?php foreach($weights as $weight): ?>
+                  <option value="<?= $weight['id']; ?>"><?= $weight['kg']; ?></option>
+                  <?php endforeach; ?>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="">Cost</label>
+              <input  type="number" name="edit_cost" step="0.01" value="<?= $details['cost']; ?>"  required="required" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label for="">Discount</label>
+              <input  type="number" name="edit_discount" step="0.01" value="<?= $details['discount']; ?>"  required="required" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label for="">Earned</label>
+              <input  type="number" name="edit_earned" step="0.01" value="<?= $details['earned']; ?>" required="required" class="form-control" >
+            </div>
+            <div class="form-group">
+              <label for="">Insurance</label>
+              <input  type="number" name="edit_insurance" step="0.01" value="<?= $details['insurance']; ?>"  required="required" class="form-control" >
+            </div>
+            <button type="submit" name="submit" id="edit_intra_state_cost" class="btn btn-info">Edit Cost</button>
+          </div>
+        </div>
 
-
-
-  <input type="hidden" name="id" value="<?php echo $id; ?>">
- <table class="table dtable-striped dtable-hover no-head-border">
-                    
-<tr><td><td style="color: green; font-size: 15px;"></td></tr>
-    <tr><td style="width: 30%; font-size: 16px;">City<td>
-      <select type="text" name="state" required="required" style="width: 100%; height: 40px;">
-             <option><?php echo $state; ?></option>
-   
-         <?php
-     include 'config/config.php';
-      $sql=$con->query("SELECT * FROM pickup_cities  ORDER BY id DESC") or die("Error2 : ". mysqli_error($con));
-
-   
-  while ($rows=mysqli_fetch_array($sql))
-   {
-    $id=$rows['id'];
-    $city = $rows['cities'];
-    ?>
-    <option><?php echo $city; ?></option>
-   <?php
-   }
-   ?>
-  </select>
-  
-      </td></td></tr>
-    <tr><td style="width: 30%; font-size: 16px;">Kg<td>
-      <select  type="text" name="kg"  required="required" style="width: 100%; height: 40px;">
-      <?php
-     include 'config/config.php';
-      $sql=$con->query("SELECT * FROM kg_range  ORDER BY id DESC") or die("Error2 : ". mysqli_error($con));
-
-   
-  while ($rows=mysqli_fetch_array($sql))
-   {
-    $id=$rows['id'];
-    $kg = $rows['kg'];
-    ?>
-    <option><?php echo $kg; ?></option>
-   <?php
-   }
-
-
-   ?>
-      </select>
-      </td></td></tr>
-
-
- <tr><td style="width: 30%; font-size: 16px;">Cost<td><input  type="number" name="cost" value="<?php echo $cost; ?>"  step="0.01"  required="required" style="width: 100%; height: 40px;"></td></td></tr>
- <!--<tr><td style="width: 30%; font-size: 16px;">Multiplier<td><input  type="number" name="multiplier"  required="required" style="width: 100%; height: 40px;"></td></td></tr>-->
-
-<tr><td style="width: 30%; font-size: 16px;">Dicount<td><input  type="number" name="discount" value="<?php echo $discount; ?>" step="0.01"  required="required" style="width: 100%; height: 40px;"></td></td></tr>
-
- <tr><td style="width: 30%; font-size: 16px;">Earned<td><input  type="number" name="earned" step="0.01" value="<?php echo $earned; ?>"  required="required" style="width: 100%; height: 40px;"></td></td></tr>
-
-
-<tr><td style="width: 30%; font-size: 16px;">Insurance<td><input  type="number" name="insurance" value="<?php echo $insurance; ?>" step="0.01"  required="required" style="width: 100%; height: 40px;"></td></td></tr>
-
-</td></tr>
-</table>
-
-
-
-<table class="table dtable-striped dtable-hover no-head-border">
-  <tr><td style="width: 30%;"><td><input type="submit" name="submit" class="btn btn-primary" value="ADD COST" style="height: 40px; width: 200px; dbackground-color: blue; color: white; border:none;"></td></td></tr> 
- </table>
-
+</form>
 
 
         </div>
@@ -195,6 +125,42 @@ $sql=$con->query("SELECT * FROM intra_cost WHERE id = '$id'") or die("Error2 : "
 
    
 <?php include('includes/js.php')?>
+
+<script>
+  
+
+  $("#edit_intra_state_cost").click((e)=>{
+    if ($("#edit_intra_cost_form")[0].checkValidity()) {
+        e.preventDefault();
+        $('#edit_intra_state_cost').val('Please wait...')
+      $.ajax({
+        url:"pages/config/controller.php",
+        method:"POST",
+        data:$("#edit_intra_cost_form").serialize()+  "&action=Edit_Intra_State_Cost" ,
+        success:(res =>{
+          console.log(res);
+          if (res === "success") {
+            $('#edit_intra_cost_form')[0].reset()
+          
+            swal.fire({
+                title:'Intra State Cost Added Successfully',
+                icon: res, 
+            })
+            $('#edit_intra_state_cost').val('Add Cost')
+          }else{
+            $("#errorMsg").text("An Error occurred Please Try again!")
+            setTimeout(() => {
+              $("#errorMsg").text("")
+            }, 5000);
+          }
+          
+        })
+      })
+    }
+    
+  })
+</script>
+
 </body>
 </html>
 

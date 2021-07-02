@@ -1,4 +1,7 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if(isset($_POST['submit']))
 {
 include 'config/config.php';
@@ -45,7 +48,7 @@ window.location = "?p=inter_costs";
       <h2 style="margin-top: 0px;">
        Edit Intra State Cost
       </h2>
-      <p><a href="?p=dashbaord"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a href="?p=intra-costs">Intra Cost</a> &nbsp;&nbsp;  >  &nbsp;&nbsp; <a class="active">Edit Intra State Cost</a></p>
+      <p><a href="?p=dashbaord"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a href="?p=intra_costs">Intra Cost</a> &nbsp;&nbsp;  >  &nbsp;&nbsp; <a class="active">Edit Intra State Cost</a></p>
     </div>
      <!--<div class="col-md-4" style="text-align: left; margin-top: 10px;">  <a href="p=new_product"> <button class="btn btn-primary" style="font-size: 16px; font-weight: 600;">Add New Category</button></a>  </div>-->
      
@@ -65,8 +68,7 @@ window.location = "?p=inter_costs";
 <form action="#" method="post" enctype="multipart/form-data">
 
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 require 'config/config.php';
 $id = $_GET['id'];
 $sql=$con->query("SELECT * FROM inter_cost WHERE id = '$id'") or die("Error2 : ". mysqli_error($con));

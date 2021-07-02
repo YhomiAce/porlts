@@ -6,8 +6,9 @@
       <div class="col-md-6">
       <h2 style="margin-top: 0px;">
 <?php
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
+  error_reporting(E_ALL);
+  ini_set('display_errors', 1);
+  
 require 'config/config.php';
 $sql=$con->query("SELECT * FROM drop_offs WHERE status = 'Accepted' AND payment_status = 'Successful' ORDER BY id") or die("Error2 : ". mysqli_error($con));
 $count = mysqli_num_rows($sql); 
@@ -35,7 +36,7 @@ $count = mysqli_num_rows($sql);
 <div style="margin: 20px; margin-top: 0px;">
         <form method="get" action="#">
           <input type="hidden" name="p" value="accepted">
-        <input type="text" name="q" value="<?php echo $_GET['q']; ?>" placeholder="Search By Package ID" style="height: 30px; font-size: 15px; padding: 15px; width: 80%; border:solid; border-color: #cccccc;"> 
+        <input type="text" placeholder="Search By Package ID" style="height: 30px; font-size: 15px; padding: 15px; width: 80%; border:solid; border-color: #cccccc;"> 
        </form>
      </div>
 
@@ -67,7 +68,7 @@ $sql=$con->query("SELECT * FROM drop_offs WHERE status = 'Accepted' AND payment_
 if(isset($_GET['q']))
 {
 $q = $_GET['q'];
-$sql=$con->query("SELECT * FROM porlt_users WHERE parcel_id = '$q'  ORDER BY id DESC LIMIT 0, 500") or die("Error2 : ". mysqli_error($con));
+$sql=$con->query("SELECT * FROM drop_offs WHERE parcel_id = '$q'  ORDER BY id DESC LIMIT 0, 500") or die("Error2 : ". mysqli_error($con));
 }
 
  $i=1;
@@ -93,7 +94,7 @@ $sql=$con->query("SELECT * FROM porlt_users WHERE parcel_id = '$q'  ORDER BY id 
     $amount=$rows['amount'];
     $earned=$rows['earned'];
     
-    
+    $travel ="Road";
     
     
     $date_t =$rows['date_t'];
