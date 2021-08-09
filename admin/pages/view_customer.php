@@ -68,7 +68,7 @@ $sql=$con->query("SELECT * FROM porlt_users WHERE id = '$id'") or die("Error2 : 
     
 ?>
 <tr><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $fname; ?><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $email; ?> <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $phone; ?><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $date_t; ?><td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $status; ?><td style="border:solid; border-width: thin; border-color: #eee;">
-  <button class="btn btn-primary" onclick="activate('<?php echo $id; ?>')">Activate</button> &nbsp;<button onclick="deactivate('<?php echo $id; ?>')" class="btn btn-primary">De-activate</button>
+  <button class="btn btn-primary activate" id="<?php echo $id; ?>">Activate</button> &nbsp;<button onclick="deactivate('<?php echo $id; ?>')" class="btn btn-primary">De-activate</button>
   <br><br>
   <button class="btn btn-primary">Reset Password</button> &nbsp;<button class="btn btn-primary" onclick="delete_user('<?php echo $id; ?>')">Delete</button>
 
@@ -89,6 +89,61 @@ $sql=$con->query("SELECT * FROM porlt_users WHERE id = '$id'") or die("Error2 : 
 
 
 <script type="text/javascript">
+
+$('body').on('click','.activate',function(e){
+  e.preventDefault()
+  var userId = $(this).attr('id');
+  console.log(userId);
+  Swal.fire({
+      title: 'Are you sure?',
+      text: "Do You want to Activate this User!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Activate user!'
+      }).then((result) => {
+      if (result.isConfirmed) {
+          $.ajax({
+              url:'process/activate_user.php',
+              method:'get',
+              data:{id:userId},
+              success:(res)=>{
+                console.log(res);
+                if (res === "success") {
+                  
+                  Swal.fire({
+                    title: "Successful Activation",
+                    icon: 'success',
+                    text: "User Activated Successfully"
+                  }).then(()=>{
+                  location.reload()
+
+                  })
+                }
+                if (res === "fail") {
+                  Swal.fire({
+                    title: "Server Error",
+                    icon: 'error',
+                    text: "Server Error Could not activate User "
+                  })
+                }
+                if (res === "verified") {
+                  Swal.fire({
+                    title: "Account Activated",
+                    icon: 'warning',
+                    text: "User Account has already been Verified!"
+                  })
+                }  
+                   
+              }
+          })
+          
+      }
+  })
+  
+})
+
 function activate(id)
 {
 
@@ -106,12 +161,12 @@ dataType:"jsonp",
 crossDomain:true,
 success: function(data){
 var success = data.success;
-if(success == "Yes")
+if(data ==="success")
 {
 alert("User Activated Successfully!");
 window.location = "?p=view_customer&id="+id;
 }
-else if (success = "No")
+else if (data = "fail")
 {
  alert("An error Occured!");
 }

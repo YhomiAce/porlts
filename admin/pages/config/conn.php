@@ -1,10 +1,10 @@
 <?php
 
 // localhost
-    // $servername="localhost"; //hostname
-    // $username="root"; //mysql username
-    // $password="6969"; //mysql password
-    // $dbName="sporylzm_porlt"; //Database name
+    $servername="localhost"; //hostname
+    $username="root"; //mysql username
+    $password="6969"; //mysql password
+    $dbName="sporylzm_porlt"; //Database name
 
     // Heroku
   // $servername = "us-cdbr-east-04.cleardb.com";
@@ -14,10 +14,10 @@
 
 
   // Cpanel
-  $servername="localhost"; //hostname
-  $username="alphavi1_porlts_root"; //mysql username
-$password="chairman@2020!!"; //mysql password
-$dbName="alphavi1_porlt_db"; //Database name
+  // $servername="localhost"; //hostname
+  // $username="alphavi1_porlts_root"; //mysql username
+  // $password="chairman@2020!!"; //mysql password
+  // $dbName="alphavi1_porlt_db"; //Database name
 
 
   try {

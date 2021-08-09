@@ -160,7 +160,7 @@ error: function(jqXHR, textStatus, errorThrown)
 <!-- ./wrapper -->
 
    
-<?php include('core/includes/js.php')?>
+<?php include('includes/js.php')?>
 </body>
 </html>
 

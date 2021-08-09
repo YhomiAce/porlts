@@ -260,4 +260,56 @@
         $result = $stmt->fetchAll();
         return $result;
     }
+
+    function saveParcel($conn, $type) {
+        $sql = "INSERT INTO parcel(type) VALUES(?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$type]);
+        return true;
+    }
+
+    function fetchAllParcels($conn) {
+        $sql = "SELECT * FROM parcel";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+    function fetchParcel($conn, $id) {
+        $sql = "SELECT * FROM parcel WHERE id =?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetch();
+        return $result;
+    }
+
+    function updateParcel($conn, $type, $id) {
+        $sql = "UPDATE parcel SET type = :type WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(["type"=>$type,"id"=>$id]);
+        return true;
+    }
+
+    function deleteParcel($conn, $id) {
+        $sql = "DELETE FROM parcel WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(["id"=>$id]);
+        return true;
+    }
+
+    function SearchPArcel($conn, $q) {
+        $sql = "SELECT * FROM parcel WHERE type LIKE '%$q%' ";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    function saveKgRange($conn, $kg, $date) {
+        $sql = "INSERT INTO kg_range(kg, date_t) VALUES(?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$kg, $date]);
+        return true;
+    }
+
 ?>

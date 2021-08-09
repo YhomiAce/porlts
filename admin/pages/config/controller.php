@@ -130,4 +130,15 @@
         
     }
 
+    if (isset($_POST['deleteParcelType'])) {
+        $id =$_POST['deleteParcelType'];
+        deleteParcel($conn, $id);
+    }
+
+    if(isset($_POST['activateUser'])) {
+        print_r($_POST);
+        $id = $_POST['activateUser'];
+        echo $id;
+    }
+
 ?>

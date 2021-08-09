@@ -111,6 +111,7 @@ if($level == 1)
    <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=kg_range" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Set KG Range</a></li>
   <!--<li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=commission" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Set Commission</a></li>-->
   <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=withdrawals" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Withdrawals</a></li>
+  <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=parcel" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Parcel</a></li>
  
          </ul>
           </li> 

@@ -2,26 +2,26 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if(isset($_POST['submit']))
-{
-include 'config/config.php';
-
-$kg = $_POST['kg'];
-
+require_once 'config/conn.php';
+require_once 'config/actions.php';
+$msg="";
+$msgClass="";
 $date_t=date("d-M-Y");
 
-
-$sql2=$con->query("INSERT INTO kg_range (kg, date_t) VALUES('$kg', '$date_t')") or die("error: ".mysqli_error($con));
-  
-if($sql2)
-{
-?>
-<script type="text/javascript">
-window.location = "?p=kg_range";
-</script>
-<?php
-}
-}
+    if(isset($_POST['submit']))
+    {
+        $kg = testInput($_POST['kg']);
+        if (empty($kg)) {
+            $msgClass = 'warning';
+            $msg = "Please fill available field";
+        }else{
+            $save = saveKgRange($conn, $kg, $date_t);
+            if ($save) {
+                $msg = "Weight Range Saved Successfully";
+                $msgClass = "success";
+            }
+        }
+    }
 ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -51,6 +51,12 @@ window.location = "?p=kg_range";
           <div style="dborder: solid; border-width: thin; border-color: #ccc; margin-top: 0px; padding: 1.5em; dheight: 500px; ">
        
 <form action="#" method="post" enctype="multipart/form-data">
+<?php if($msg !== ""): ?>
+        <div class="alert alert-<?= $msgClass; ?> alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          <strong></strong> <?= $msg; ?>
+        </div>
+      <?php endif; ?>
  <table class="table dtable-striped dtable-hover no-head-border">
                     
 <tr><td><td style="color: green; font-size: 15px;"></td></tr>
