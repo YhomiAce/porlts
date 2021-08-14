@@ -393,10 +393,10 @@ $sumTotal = 0.04 * $sumTotal;
 <a href="?p=withdrawals">
  <div class="col-lg-4 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-blue">
+          <div class="small-box bg-orange">
             <div class="inner">
   
-          <?php
+<?php
 //$sql3 = $con->query("SELECT SUM(amount) as sumTotal FROM wallet_trans WHERE  account = 'Main' AND method = 'Transfer' AND status = 'Pending'") or die("Error2 : ". mysqli_error($con));
 
 $sql3 = $con->query("SELECT * FROM withdrawal WHERE  status = 'New' ") or die("Error2 : ". mysqli_error($con));
@@ -418,7 +418,7 @@ $sumTotal = mysqli_num_rows($sql3);
     }
 
 ?>
- <h3 style="font-style: italic; font-size: 50px;"><?php echo $count2; ?></h3>
+ <h3 style="font-style: italic; font-size: 50px;"><?php echo $sumTotal; ?></h3>
 
 <!-- <p style="font-size: 20px; font-weight: bold; dfont-style: italic;">G / M</p>-->
 <h3 style="font-size: 20px; font-style: italic; padding-top: 30px; ">Withdrawal Request</h3>
