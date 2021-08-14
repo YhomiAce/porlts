@@ -384,48 +384,7 @@ $sumTotal = 0.04 * $sumTotal;
           </div>
         </div>
 </a>-->
-<a href="?p=customers">
- <div class="col-lg-4 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-orange">
-            <div class="inner">
-  
-   <?php
-   error_reporting(E_ALL);
-   ini_set('display_errors', 1);
-   
-      require 'config/config.php';
-     $sql2=$con->query("SELECT * FROM  porlt_users") or die("Error2 : ". mysqli_error($con));
-      $count2 = mysqli_num_rows($sql2);
 
-    if($count2 >= 1000)
-      {
-        $count2 = $count2/1000;
-        $count2 = ceil($count2);
-        $count2 = $count2."K";
-    }
-    elseif ($count2 >= 1000000)
-    {
-      $count2 = $count2 / 1000000;
-      $count2 = ceil($count2);
-      $count2 = $count2."M";
-    } 
-
-
-
-      ?>
-    
-                <h3 style="font-style: italic; font-size: 50px;"><?php echo $count2; ?></h3>
-
-             <!-- <p style="font-size: 20px; font-weight: bold; dfont-style: italic;">G / M</p>-->
-             <h3 style="font-size: 20px; font-style: italic; padding-top: 30px; ">TOTAL USERS</h3>
-            </div>
-            <div class="icon" style="padding-top: 10px;">
-              <i class="glyphicon glyphicon"></i>
-            </div>
-          </div>
-        </div>
-</a>
         
         <!-- ./col -->
 
