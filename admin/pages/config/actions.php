@@ -80,6 +80,20 @@
         return $result;
     }
 
+    function createPickupCity($conn, $city, $date) {
+        $sql = "INSERT INTO pickup_cities(cities, date_t) VALUES(:city, :date_t)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['city'=>$city, 'date_t'=>$date]);
+        return true;
+    }
+
+    function createDesCity($conn, $city, $date) {
+        $sql = "INSERT INTO des_cities(cities, date_t) VALUES(:city, :date_t)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['city'=>$city, 'date_t'=>$date]);
+        return true;
+    }
+
     function searchPickupArea($conn, $q) {
         $sql = "SELECT * FROM pickup_area WHERE area LIKE '%$q%'";
         $stmt = $conn->prepare($sql);
@@ -186,6 +200,25 @@
             "discount"=>$discount,
             "earned"=>$earned,
             "insurance"=>$insurance
+        ]);
+        
+        return true;
+    }
+
+    function createInterStateCost($conn, $state1, $state2,$kg, $cost, $discount, $earned, $insurance, $date)
+    {
+        $sql = "INSERT INTO inter_cost ( state1, state2, kg, cost, discount, multiplier, earned, insurance, date_t) VALUES(:state1, :state2, :kg, :cost, :discount, '', :earned, :insurance, :date_t)";
+        $stmt = $conn->prepare($sql);
+        
+        $stmt->execute([
+            "state1"=>$state1,
+            "state2"=>$state2,
+            "kg"=>$kg,
+            "cost"=>$cost,
+            "discount"=>$discount,
+            "earned"=>$earned,
+            "insurance"=>$insurance,
+            'date_t'=> $date
         ]);
         
         return true;
@@ -309,6 +342,74 @@
         $sql = "INSERT INTO kg_range(kg, date_t) VALUES(?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$kg, $date]);
+        return true;
+    }
+
+    function fetchAllState($conn) {
+        $sql = "SELECT * FROM states";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    function fetchAllWithdrawal($conn) {
+        $sql = "SELECT * FROM withdrawal WHERE status = 'New' ORDER BY id DESC LIMIT 0, 200";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    function fetchAllApprovedWithdrawal($conn) {
+        $sql = "SELECT * FROM withdrawal WHERE status = 'Approved' ORDER BY id DESC LIMIT 0, 200";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    function fetchAllDisapprovedWithdrawal($conn) {
+        $sql = "SELECT * FROM withdrawal WHERE status = 'Disapproved' ORDER BY id DESC LIMIT 0, 200";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    function fetchWithdraw($conn, $id) {
+        $sql = "SELECT * FROM withdrawal WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id'=>$id]);
+        $result = $stmt->fetch();
+        return $result;
+    }
+
+    function getUserDetails($conn, $email) {
+        $sql = "SELECT * FROM porlt_users WHERE email =:email";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['email'=>$email]);
+        $result = $stmt->fetch();
+        return $result;
+    }
+
+    function approvePayement($conn, $id, $date) {
+        $sql = "UPDATE withdrawal SET status = 'Approved', approved_date =:approve_date WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(["approve_date"=>$date,"id"=>$id]);
+        return true;
+    }
+
+    function disapprovePayement($conn, $id) {
+        $sql = "UPDATE withdrawal SET status = 'Disapproved' WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(["id"=>$id]);
+        return true;
+    }
+
+    function updateUserBalance($conn, $email, $balance) {
+        $sql = "UPDATE porlt_users SET wallet = :balance WHERE email =:email";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(["balance"=>$balance, "email"=>$email]);
         return true;
     }
 

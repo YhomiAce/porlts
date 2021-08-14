@@ -141,4 +141,189 @@
         echo $id;
     }
 
+    if (isset($_POST['action']) && $_POST['action'] == "Add_inter_State_Cost") {
+        // print_r($_POST);
+        $state1 = $_POST['state1'];
+        $state2 = $_POST['state2'];
+        $kg = $_POST['kg'];
+        $cost = $_POST['cost'];
+        $discount = $_POST['discount'];
+        $earned = $_POST['earned'];
+        $insurance = $_POST['insurance'];
+        $date_t=date("d-M-Y");
+        $save = createInterStateCost($conn, $state1, $state2,$kg, $cost, $discount, $earned, $insurance, $date_t);
+        
+        if ($save) {
+            echo "success";
+        }else{
+            echo "fail";
+        }
+    }
+
+    if (isset($_POST['approveId'])) {
+        $id = $_POST['approveId'];
+        $data = fetchWithdraw($conn, $id);
+        $email = $data['user'];
+        $user = getUserDetails($conn, $email);
+        $wallet = $user['wallet'];
+        $name = $user['fulname'];
+        $phone = $user['phone'];
+        $request = fetchWithdraw($conn, $id);
+        $bank = $request['bank'];
+        $account_num = $request['account_num'];
+        $account_name = $request['account_name'];
+        $amount = $request['amount'];
+        $balance = $wallet - $amount;
+        $date_t=date("d-M-Y");
+        
+        if ($wallet < $amount) {
+            echo "balance";
+        }else{
+            $approve = approvePayement($conn, $id, $date_t);
+            if ($approve) {
+                $updateWallet = updateUserBalance($conn, $email, $balance);
+                try {
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.mailtrap.io';
+                    $mail->SMTPAuth = true;
+                    $mail->SMTPDebug  = 0;
+                    $mail->Username   = "1e544c5e5f7d79";                    
+                    $mail->Password   = "e841d92282037e";                              
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         
+                    $mail->Port       = 587;
+        
+                    $mail->From = "support@diimtech.com";
+                    $mail->FromName = "Porlt App";
+                    $mail->addAddress($email);
+                    $mail->addReplyTo("noreply@diimtech.com");
+        
+        
+                    $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+                    //$mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+                    //$mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+                    $mail->IsHTML(true);                                  // set email format to HTML
+        
+                    $mail->Subject = "Approved Withdrawal";
+                    $mail->Body    = '<!DOCTYPE HTML>     
+                        <html>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+                    </head>
+                    <body>
+                    <div style="dbackground-color:#eee; border:solid; border-width:thin; border-color:#EEE; position: relative; font-size:15px; padding-top:2em; padding:1em; font-family:Verdana, Geneva, sans-serif">
+        
+        
+                    <h2>
+                    Congratulations! Your Withdraw Request for Amount '.$amount.' naira  has just been Approved.
+                    </h2>
+                    
+                    <h3>Request Details</h3>
+                    <h5>Amount Requested: N'. $amount.' </h5>
+                    <h5>Customer Name: '. $name.' </h5>
+                    <h5>Customer Email: '. $email.' </h5>
+                    <h5>Customer Phone: '. $phone.' </h5>
+                    <h3>Account Details</h3>   
+                    <h5>Account Number: '. $account_num.' </h5>   
+                    <h5>Account Name: '. $account_name.' </h5>   
+                    <h5>Bank: '. $bank.' </h5>
+                    <h5>Date Approved: '. $date_t.' </h5>
+                    </div>
+                    </body>
+                    </html>';
+        
+        
+                    if($mail->send())
+                    {
+                        
+                        echo "success";
+                    }else{
+                        echo "fail";
+                    }
+                } catch (Exception $e) {
+                    echo "fail";
+                }
+            }
+
+        }
+    }
+
+    if (isset($_POST['disapproveId'])) {
+        $id = $_POST['disapproveId'];
+        $data = fetchWithdraw($conn, $id);
+        $email = $data['user'];
+        $user = getUserDetails($conn, $email);
+        $wallet = $user['wallet'];
+        $name = $user['fulname'];
+        $phone = $user['phone'];
+        $request = fetchWithdraw($conn, $id);
+        $bank = $request['bank'];
+        $account_num = $request['account_num'];
+        $account_name = $request['account_name'];
+        $amount = $request['amount'];
+        $balance = $wallet - $amount;
+        $date_t=date("d-M-Y");
+
+        $disapprove = disapprovePayement($conn, $id);
+        if ($disapprove) {
+            try {
+                $mail->isSMTP();
+                $mail->Host = 'smtp.mailtrap.io';
+                $mail->SMTPAuth = true;
+                $mail->SMTPDebug  = 0;
+                $mail->Username   = "1e544c5e5f7d79";                    
+                $mail->Password   = "e841d92282037e";                              
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         
+                $mail->Port       = 587;
+    
+                $mail->From = "support@diimtech.com";
+                $mail->FromName = "Porlt App";
+                $mail->addAddress($email);
+                $mail->addReplyTo("noreply@diimtech.com");
+    
+    
+                $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+                //$mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+                //$mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+                $mail->IsHTML(true);                                  // set email format to HTML
+    
+                $mail->Subject = "Disapproved Withdrawal";
+                $mail->Body    = '<!DOCTYPE HTML>     
+                    <html>
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+                </head>
+                <body>
+                <div style="dbackground-color:#eee; border:solid; border-width:thin; border-color:#EEE; position: relative; font-size:15px; padding-top:2em; padding:1em; font-family:Verdana, Geneva, sans-serif">
+    
+    
+                <h2>
+                Sorry! Your Withdraw Request for Amount '.$amount.' naira  has just been Disapproved. Contact Admin for more information
+                </h2>
+                
+                <h3>Request Details</h3>
+                <h5>Amount Requested: N'. $amount.' </h5>
+                <h5>Customer Name: '. $name.' </h5>
+                <h5>Customer Email: '. $email.' </h5>
+                <h5>Customer Phone: '. $phone.' </h5>
+                <h3>Account Details</h3>   
+                <h5>Account Number: '. $account_num.' </h5>   
+                <h5>Account Name: '. $account_name.' </h5>   
+                <h5>Bank: '. $bank.' </h5>
+                
+                </div>
+                </body>
+                </html>';
+    
+    
+                if($mail->send())
+                {
+                    
+                    echo "success";
+                }else{
+                    echo "fail";
+                }
+            } catch (Exception $e) {
+                echo "fail";
+            }
+        }
+    }
+
 ?>

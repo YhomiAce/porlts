@@ -2,38 +2,31 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+require_once 'config/conn.php';
+require_once 'config/actions.php';
+
+$msg="";
+$msgClass="";
+
 if(isset($_POST['submit']))
 {
-include 'config/config.php';
 
-$city = $_POST['city'];
-$date_t=date("d-M-Y");
+  $city = $_POST['city'];
+  $date_t=date("d-M-Y");
 
-
-$sql=$con->query("SELECT * FROM pickup_cities WHERE cities = '$city'") or die("Error2 : ". mysqli_error($con));
-if($sql)
-{
-$count = mysqli_num_rows($sql);
-
-if($count >= 1)
-{
-$up_error = "City Already Exist!";
-}
-else
-{
-$sql2=$con->query("INSERT INTO pickup_cities (cities, date_t) VALUES('$city', '$date_t')") or die("error: ".mysqli_error($con));
-}
+  $exist = searchPickupCity($conn, $city);
+  if ($exist) {
+    $msg =" City Already Exist";
+    $msgClass = "warning";
+  }else{
+    $save = createPickupCity($conn, $city, $date_t);
+    if ($save) {
+      $msg ="New Pickup City Added";
+      $msgClass = "success";
+    }
+  }
 }
 
-if($sql2)
-{
-?>
-<script type="text/javascript">
-window.location = "?p=pickup_cities";
-</script>
-<?php
-}
-}
 ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -63,6 +56,12 @@ window.location = "?p=pickup_cities";
           <div style="dborder: solid; border-width: thin; border-color: #ccc; margin-top: 0px; padding: 1.5em; dheight: 500px; ">
        
 <form action="#" method="post" enctype="multipart/form-data">
+<?php if($msg !== ""): ?>
+  <div class="alert alert-<?= $msgClass; ?> alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong></strong> <?= $msg; ?>
+  </div>
+<?php endif; ?>
  <table class="table dtable-striped dtable-hover no-head-border">
                     
 <tr><td><td style="color: green; font-size: 15px;"></td></tr>

@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 
 require_once 'config/conn.php';
 require_once 'config/actions.php';
-$rows = fetchAllWithdrawal($conn);
+$rows = fetchAllApprovedWithdrawal($conn);
 ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -41,9 +41,9 @@ $rows = fetchAllWithdrawal($conn);
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Bank</th> 
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Account Name</th>
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Account Number</th>
- <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Date</th>
+ <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Date Requested</th>
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Status</th>
- <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Action</th>
+ <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Date Approved</th>
  
  <?php foreach($rows as $key=>$row): ?>
   <tr>
@@ -57,9 +57,7 @@ $rows = fetchAllWithdrawal($conn);
     <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $row['account_num']; ?></td>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo date('d-M-Y',strtotime('+0 days',strtotime(str_replace('/', '-', $row['date_t'])))); ?></td>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $row['status']; ?></td>
-    <td style="border:solid; border-width: thin; border-color: #eee;"><button class="btn btn-primary approveBtn" id="<?php echo $row['id']; ?>">Approve</button>
-    <button class="btn btn-primary disapproveBtn" id="<?php echo $row['id']; ?>">Disapprove</button>
-  </td>
+    <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo date('d-M-Y',strtotime('+0 days',strtotime(str_replace('/', '-', $row['approved_date'])))); ?></td>
 
   </tr>
 
@@ -99,116 +97,6 @@ $rows = fetchAllWithdrawal($conn);
 
    
 <?php include('includes/js.php')?>
-
-<script>
-  $('body').on('click','.approveBtn',function(e){
-    e.preventDefault()
-    var appId = $(this).attr('id');
-    Swal.fire({
-        title: 'Are you sure You want to approve?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, approve Payment!'
-        }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url:'pages/config/controller.php',
-                method:'post',
-                data:{approveId:appId},
-                success:(res)=>{
-                  console.log(res);
-                  if (res ==="success") {
-                    Swal.fire({
-                      title: "Successful Approval",
-                      icon: 'success',
-                      text: "User Payment Approved"
-                    }).then(()=>{
-                    // location.reload()
-                    })
-                    
-                  }
-                  if (res ==="balance") {
-                    Swal.fire({
-                      title: "Failed To Approve",
-                      icon: 'warning',
-                      text: "Insufficient Balance"
-                    }).then(()=>{
-                    // location.reload()
-                    })
-                    
-                  }
-
-                  if (res ==="fail") {
-                    Swal.fire({
-                      title: "Failed To Approve",
-                      icon: 'warning',
-                      text: "<h2>Server Error: Contact Administrator</h2>"
-                    }).then(()=>{
-                    // location.reload()
-                    })
-                    
-                  }
-                }
-            })
-            
-        }
-    })
-    
-})
-
-// Disapprove
-$('body').on('click','.disapproveBtn',function(e){
-    e.preventDefault()
-    var appId = $(this).attr('id');
-    Swal.fire({
-        title: 'Are you sure You want to Disapprove?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Disapprove Payment!'
-        }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                url:'pages/config/controller.php',
-                method:'post',
-                data:{disapproveId:appId},
-                success:(res)=>{
-                  console.log(res);
-                  if (res ==="success") {
-                    Swal.fire({
-                      title: "Success",
-                      icon: 'success',
-                      text: "User request has been Disapproved"
-                    }).then(()=>{
-                      location.reload()
-                    })
-                    
-                  }
-                  
-                  if (res ==="fail") {
-                    Swal.fire({
-                      title: "Failed To Disapprove",
-                      icon: 'warning',
-                      text: "<h2>Server Error: Contact Administrator</h2>"
-                    }).then(()=>{
-                      location.reload()
-                      // console.log(res);
-                    })
-                    
-                  }
-                }
-            })
-            
-        }
-    })
-    
-})
-</script>
 </body>
 </html>
 

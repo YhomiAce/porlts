@@ -110,12 +110,25 @@ if($level == 1)
   <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=inter_costs" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Set Inter-State Cost</a></li>
    <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=kg_range" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Set KG Range</a></li>
   <!--<li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=commission" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Set Commission</a></li>-->
-  <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=withdrawals" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Withdrawals</a></li>
   <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=parcel" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Parcel</a></li>
  
          </ul>
           </li> 
 
+<li class="treeview">
+  <a href="#">
+  <i class="fas fa-wallet"></i>   <span style="font-family: verdana; font-size: 13px; font-weight: normal;">&nbsp; Withdraws</span>
+    <span class="pull-right-container">
+      <i class="fa fa-angle-right pull-right"></i>
+    </span>
+  </a>
+  <ul class="treeview-menu">
+    <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=withdrawals" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Pending</a></li>
+    <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=approved" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Approved</a></li>
+    <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=disapproved" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Disapproved</a></li>
+
+  </ul>
+</li> 
 <?php
 }
 ?>

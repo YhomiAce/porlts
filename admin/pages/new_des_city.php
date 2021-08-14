@@ -2,38 +2,31 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+require_once 'config/conn.php';
+require_once 'config/actions.php';
+
+$msg="";
+$msgClass="";
+
 if(isset($_POST['submit']))
 {
-include 'config/config.php';
 
-$city = $_POST['city'];
-$date_t=date("d-M-Y");
+  $city = $_POST['city'];
+  $date_t=date("d-M-Y");
 
-
-$sql=$con->query("SELECT * FROM des_cities WHERE cities = '$city'") or die("Error2 : ". mysqli_error($con));
-if($sql)
-{
-$count = mysqli_num_rows($sql);
-
-if($count >= 1)
-{
-$up_error = "City Already Exist!";
-}
-else
-{
-$sql2=$con->query("INSERT INTO des_cities (cities, date_t) VALUES('$city', '$date_t')") or die("error: ".mysqli_error($con));
-}
+  $exist = searchDestinationCity($conn, $city);
+  if ($exist) {
+    $msg =" City Already Exist";
+    $msgClass = "warning";
+  }else{
+    $save = createDesCity($conn, $city, $date_t);
+    if ($save) {
+      $msg ="New Destination City Added";
+      $msgClass = "success";
+    }
+  }
 }
 
-if($sql2)
-{
-?>
-<script type="text/javascript">
-window.location = "?p=des_cities";
-</script>
-<?php
-}
-}
 ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -45,7 +38,7 @@ window.location = "?p=des_cities";
       <h2 style="margin-top: 0px;">
        Add a New Destination City
       </h2>
-      <p><a href="?p=dashbaord"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a href="?p=pickup_cities">Destination City</a> &nbsp;&nbsp;  > &nbsp;&nbsp; <a class="active">Add a New Destination City</a></p>
+      <p><a href="?p=dashbaord"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a href="?p=des_cities">Destination City</a> &nbsp;&nbsp;  > &nbsp;&nbsp; <a class="active">Add a New Destination City</a></p>
     </div>
      <!--<div class="col-md-4" style="text-align: left; margin-top: 10px;">  <a href="p=new_product"> <button class="btn btn-primary" style="font-size: 16px; font-weight: 600;">Add New Category</button></a>  </div>-->
      
@@ -63,6 +56,12 @@ window.location = "?p=des_cities";
           <div style="dborder: solid; border-width: thin; border-color: #ccc; margin-top: 0px; padding: 1.5em; dheight: 500px; ">
        
 <form action="#" method="post" enctype="multipart/form-data">
+<?php if($msg !== ""): ?>
+  <div class="alert alert-<?= $msgClass; ?> alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong></strong> <?= $msg; ?>
+  </div>
+<?php endif; ?>
  <table class="table dtable-striped dtable-hover no-head-border">
                     
 <tr><td><td style="color: green; font-size: 15px;"></td></tr>
