@@ -205,6 +205,35 @@
         return true;
     }
 
+    function checkInterState($conn, $state1, $state2, $kg) {
+        
+        $sql = "SELECT * FROM inter_cost WHERE state1 =:state1 AND state2=:state2 AND kg=:kg";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            "state1"=>$state1,
+            "state2"=>$state2,
+            "kg"=>$kg,
+        ]);
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
+
+    function checkInterState2($conn, $state1, $state2, $kg) {
+        
+        $sql = "SELECT * FROM inter_cost WHERE state1=:state2 AND state2=:state1 AND kg=:kg";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            "state2"=>$state2,
+            "state1"=>$state1,
+            "kg"=>$kg,
+        ]);
+        $result = $stmt->fetchAll();
+        return $result;
+    }
+
     function createInterStateCost($conn, $state1, $state2,$kg, $cost, $discount, $earned, $insurance, $date)
     {
         $sql = "INSERT INTO inter_cost ( state1, state2, kg, cost, discount, multiplier, earned, insurance, date_t) VALUES(:state1, :state2, :kg, :cost, :discount, '', :earned, :insurance, :date_t)";
@@ -406,11 +435,56 @@
         return true;
     }
 
-    function updateUserBalance($conn, $email, $balance) {
-        $sql = "UPDATE porlt_users SET wallet = :balance WHERE email =:email";
+    function updateUserBalance($conn, $userId, $balance) {
+        $sql = "UPDATE wallets SET balance = :balance WHERE user_id =:userId";
         $stmt = $conn->prepare($sql);
-        $stmt->execute(["balance"=>$balance, "email"=>$email]);
+        $stmt->execute(["balance"=>$balance, "userId"=>$userId]);
         return true;
+    }
+
+    function searchStates($conn, $q) {
+        $sql = "SELECT * FROM states WHERE name LIKE '%$q%' ";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    function createNewState($conn, $name) {
+        $sql = "INSERT INTO states(name) VALUES(:name)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(["name"=>$name]);
+        return true;
+    }
+
+    function deleteState($conn, $id) {
+        $sql = "DELETE FROM states WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(["id"=>$id]);
+        return true;
+    }
+
+    function fetchUserWallet($conn, $id) {
+        $sql = "SELECT * FROM wallets WHERE user_id = ? ";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    function rejectKyc($conn, $userId) {
+        $sql = "UPDATE porlt_users SET kyc_status =1 WHERE id =:userId";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(["userId"=>$userId]);
+        return true;
+    }
+
+    function getUserById($conn, $id) {
+        $sql = "SELECT * FROM porlt_users WHERE id =:id";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id'=>$id]);
+        $result = $stmt->fetch();
+        return $result;
     }
 
 ?>

@@ -1,16 +1,16 @@
 <?php
 
 // localhost
-    // $servername="localhost"; //hostname
-    // $username="root"; //mysql username
-    // $password="6969"; //mysql password
-    // $dbName="sporylzm_porlt"; //Database name
+    $servername="localhost"; //hostname
+    $username="root"; //mysql username
+    $password="6969"; //mysql password
+    $dbName="sporylzm_porlt"; //Database name
 
     // Heroku
-  $servername = "us-cdbr-east-04.cleardb.com";
-  $dbName = "heroku_f4565c2e7db9247";
-  $username = "be2ec2be0cee8b";
-  $password = "2f4ac3b3";
+  // $servername = "us-cdbr-east-04.cleardb.com";
+  // $dbName = "heroku_f4565c2e7db9247";
+  // $username = "be2ec2be0cee8b";
+  // $password = "2f4ac3b3";
 
 
   // Cpanel

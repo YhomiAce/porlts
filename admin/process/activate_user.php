@@ -25,6 +25,7 @@
     $rowsx = mysqli_fetch_array($resultx);
     $email = $rowsx['email'];
     $status = $rowsx['status'];
+    $name = $rowsx['fulname'];
     if ($status == "Verified") {
         echo "verified";
     }else{
@@ -34,8 +35,8 @@
             $mail->Host = 'smtp.mailtrap.io';
             $mail->SMTPAuth = true;
             $mail->SMTPDebug  = 0;
-            $mail->Username   = "1e544c5e5f7d79";                    
-            $mail->Password   = "e841d92282037e";                              
+            $mail->Username   = "a45da6cddd10cd";                    
+            $mail->Password   = "9c297ff39a7ea9";                             
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         
             $mail->Port       = 587;
 
@@ -50,23 +51,54 @@
             //$mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
             $mail->IsHTML(true);                                  // set email format to HTML
 
-            $mail->Subject = "Account Activated";
+            $mail->Subject = "Account Activation Notice";
             $mail->Body    = '<!DOCTYPE HTML>     
-                <html>
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-            </head>
-            <body>
-            <div style="dbackground-color:#eee; border:solid; border-width:thin; border-color:#EEE; position: relative; font-size:15px; padding-top:2em; padding:1em; font-family:Verdana, Geneva, sans-serif">
+                        <html>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+                    </head>
+                    <body>
+                    <div style="dbackground-color:#eee; border:solid; border-width:thin; border-color:#EEE; position: relative; font-size:15px; padding-top:2em; padding:1em; font-family:Verdana, Geneva, sans-serif">
+                    <p>
+                        Dear  '.$name.',
+                    </p>
+                    
+                    <p>Congratulations! Your account has just been activated for use.</p>
 
+                    <p>
+                    You can now use our service to send packages across and within states at an 
+                    affordable rate or to deliver packages and earn some cool cash as you travel.
+                    </p>
 
-            <h2>
-            Congratulations! Your account has just been activated for use.
-            </h2>
-
-                        
-            </div>
-            </body>
-            </html>';
+                    <p>
+                    Invite your family and friends to use our service by sending your referral code 
+                    found on the app to them and earn money when they send your first delivery request.
+                    </p>
+                    <p>Kind Regards,</p>
+                    <br>
+                    <p>Support Team.</p>
+                    
+                    <p><a href="http://www.porlt.com">porlt.com</a></p>
+                    
+                    <p>support@porlt.com</p>
+                    
+                    <p>Porlt - Where Senders Meet Travelers!</p>
+                    
+                    <br>
+                    <h5>DISCLAIMER:</h5>
+                    
+                    <p style=" width:100%;" >
+                    This email and any attachments are for the designated recipient only
+                     and may contain confidential information. If you have received it in 
+                     error, kindly notify the sender and delete the original. Disclosing, 
+                     copying, distributing or taking any action based on the contents of 
+                     this email is unauthorized and prohibited.  PORLT ENTERPRISE including 
+                     its subsidiaries and employees accept no liability for any loss, direct, 
+                     indirect or consequential, arising from information provided and actions 
+                     resulting therein.  
+                    </p>
+                    </div>
+                    </body>
+                    </html>';
 
 
             if($mail->send())

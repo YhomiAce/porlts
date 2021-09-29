@@ -151,28 +151,42 @@
         $earned = $_POST['earned'];
         $insurance = $_POST['insurance'];
         $date_t=date("d-M-Y");
-        $save = createInterStateCost($conn, $state1, $state2,$kg, $cost, $discount, $earned, $insurance, $date_t);
-        
-        if ($save) {
-            echo "success";
+        $check = checkInterState($conn, $state1, $state2, $kg);
+        $check2 = checkInterState2($conn, $state1, $state2, $kg);
+        if ($state1 == $state2) {
+            echo "same";
+        }elseif ($check) {
+            echo "exist";
+        }elseif($check2){
+            echo "exist";
         }else{
-            echo "fail";
+            $save = createInterStateCost($conn, $state1, $state2,$kg, $cost, $discount, $earned, $insurance, $date_t);
+        
+            if ($save) {
+                echo "success";
+            }else{
+                echo "fail";
+            }
         }
+        
     }
 
     if (isset($_POST['approveId'])) {
+        
         $id = $_POST['approveId'];
         $data = fetchWithdraw($conn, $id);
         $email = $data['user'];
         $user = getUserDetails($conn, $email);
-        $wallet = $user['wallet'];
+        $userId = $user["id"];
+        $walletDetails = fetchUserWallet($conn, $userId);
+        $wallet = $walletDetails['balance'];
         $name = $user['fulname'];
         $phone = $user['phone'];
-        $request = fetchWithdraw($conn, $id);
-        $bank = $request['bank'];
-        $account_num = $request['account_num'];
-        $account_name = $request['account_name'];
-        $amount = $request['amount'];
+
+        $bank = $data['bank'];
+        $account_num = $data['account_num'];
+        $account_name = $data['account_name'];
+        $amount = $data['amount'];
         $balance = $wallet - $amount;
         $date_t=date("d-M-Y");
         
@@ -181,14 +195,14 @@
         }else{
             $approve = approvePayement($conn, $id, $date_t);
             if ($approve) {
-                $updateWallet = updateUserBalance($conn, $email, $balance);
+                $updateWallet = updateUserBalance($conn, $userId, $balance);
                 try {
                     $mail->isSMTP();
                     $mail->Host = 'smtp.mailtrap.io';
                     $mail->SMTPAuth = true;
                     $mail->SMTPDebug  = 0;
-                    $mail->Username   = "1e544c5e5f7d79";                    
-                    $mail->Password   = "e841d92282037e";                              
+                    $mail->Username   = "a45da6cddd10cd";                    
+                    $mail->Password   = "9c297ff39a7ea9";                              
                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         
                     $mail->Port       = 587;
         
@@ -203,29 +217,59 @@
                     //$mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
                     $mail->IsHTML(true);                                  // set email format to HTML
         
-                    $mail->Subject = "Approved Withdrawal";
+                    $mail->Subject = "Withdrawal Request";
                     $mail->Body    = '<!DOCTYPE HTML>     
                         <html>
                     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
                     </head>
                     <body>
                     <div style="dbackground-color:#eee; border:solid; border-width:thin; border-color:#EEE; position: relative; font-size:15px; padding-top:2em; padding:1em; font-family:Verdana, Geneva, sans-serif">
-        
-        
-                    <h2>
-                    Congratulations! Your Withdraw Request for Amount '.$amount.' naira  has just been Approved.
-                    </h2>
+                    <p>
+                        Dear '.$name.',
+                    </p>
+                    
+                    <p>
+                    We are glad to inform you that your withdrawal request has been approved.
+                    </p>
                     
                     <h3>Request Details</h3>
-                    <h5>Amount Requested: N'. $amount.' </h5>
-                    <h5>Customer Name: '. $name.' </h5>
-                    <h5>Customer Email: '. $email.' </h5>
-                    <h5>Customer Phone: '. $phone.' </h5>
-                    <h3>Account Details</h3>   
-                    <h5>Account Number: '. $account_num.' </h5>   
-                    <h5>Account Name: '. $account_name.' </h5>   
-                    <h5>Bank: '. $bank.' </h5>
-                    <h5>Date Approved: '. $date_t.' </h5>
+                    <p>Amount : N'. $amount.' </p>
+                    <p>Customer Name: '. $name.' </p>
+                    <p>Customer Email: '. $email.' </p>
+                    <p>Customer Phone: '. $phone.' </p>
+
+
+                    <h3><b>Account Information</b></h3>   
+                    <p>Account Number: '. $account_num.' </p>   
+                    <p>Account Name: '. $account_name.' </p>   
+                    <p>Bank: '. $bank.' </p>
+                    <p>Date Approved: '. $date_t.' </p>
+                    
+                    <p>
+                    Our account department will  process your request and credit your account as soon as possible.
+                    </p>
+
+                    <p>Kind Regards,</p>
+                    
+                    <p>Support Team.</p>
+                    
+                    <p><a href="http://www.porlt.com">porlt.com</a></p>
+                   
+                    <p>support@porlt.com</p>
+                    <br>
+                    <h5>DISCLAIMER:</h5>
+
+                    <p style=" width:100%;" >
+                    This email and any attachments are for the designated recipient only
+                     and may contain confidential information. If you have received it in 
+                     error, kindly notify the sender and delete the original. Disclosing, 
+                     copying, distributing or taking any action based on the contents of 
+                     this email is unauthorized and prohibited.  PORLT ENTERPRISE including 
+                     its subsidiaries and employees accept no liability for any loss, direct, 
+                     indirect or consequential, arising from information provided and actions 
+                     resulting therein.  
+                    </p>
+
                     </div>
                     </body>
                     </html>';
@@ -251,14 +295,12 @@
         $data = fetchWithdraw($conn, $id);
         $email = $data['user'];
         $user = getUserDetails($conn, $email);
-        $wallet = $user['wallet'];
         $name = $user['fulname'];
         $phone = $user['phone'];
-        $request = fetchWithdraw($conn, $id);
-        $bank = $request['bank'];
-        $account_num = $request['account_num'];
-        $account_name = $request['account_name'];
-        $amount = $request['amount'];
+        $bank = $data['bank'];
+        $account_num = $data['account_num'];
+        $account_name = $data['account_name'];
+        $amount = $data['amount'];
         $balance = $wallet - $amount;
         $date_t=date("d-M-Y");
 
@@ -269,8 +311,8 @@
                 $mail->Host = 'smtp.mailtrap.io';
                 $mail->SMTPAuth = true;
                 $mail->SMTPDebug  = 0;
-                $mail->Username   = "1e544c5e5f7d79";                    
-                $mail->Password   = "e841d92282037e";                              
+                $mail->Username   = "a45da6cddd10cd";                    
+                $mail->Password   = "9c297ff39a7ea9";                              
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         
                 $mail->Port       = 587;
     
@@ -285,32 +327,160 @@
                 //$mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
                 $mail->IsHTML(true);                                  // set email format to HTML
     
-                $mail->Subject = "Disapproved Withdrawal";
+                $mail->Subject = "Withdrawal Request";
                 $mail->Body    = '<!DOCTYPE HTML>     
-                    <html>
-                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-                </head>
-                <body>
-                <div style="dbackground-color:#eee; border:solid; border-width:thin; border-color:#EEE; position: relative; font-size:15px; padding-top:2em; padding:1em; font-family:Verdana, Geneva, sans-serif">
+                        <html>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+                    </head>
+                    <body>
+                    <div style="dbackground-color:#eee; border:solid; border-width:thin; border-color:#EEE; position: relative; font-size:15px; padding-top:2em; padding:1em; font-family:Verdana, Geneva, sans-serif">
+                    <p>
+                        Dear '.$name.',
+                    </p>
+        
+                    <p>
+                    Unfortunately, your withdrawal request was not approved.
+                    </p>
+
+                    <p>Kindly contact support for more information.</p>
+                    
+                    <h3>Request Details</h3>
+                    <p>Amount : N'. $amount.' </p>
+                    <p>Customer Name: '. $name.' </p>
+                    <p>Customer Email: '. $email.' </p>
+                    <p>Customer Phone: '. $phone.' </p>
+
+                    
+                    <h3><b>Account Information</b></h3>   
+                    <p>Account Number: '. $account_num.' </p>   
+                    <p>Account Name: '. $account_name.' </p>   
+                    <p>Bank: '. $bank.' </p>
+                    <p>Date Approved: '. $date_t.' </p>
+
+
+                    <p>Kind Regards,</p>
+
+                    <p>Support Team.</p>
+                    
+                    <p><a href="http://www.porlt.com">porlt.com</a></p>
+                    
+                    <p>support@porlt.com</p>
+                    
+                    <p>Porlt - Where Senders Meet Travelers!</p>
+                    
+                    <br>
+                    <h5>DISCLAIMER:</h5>
+
+                    <p style=" width:100%;" >
+                    This email and any attachments are for the designated recipient only
+                     and may contain confidential information. If you have received it in 
+                     error, kindly notify the sender and delete the original. Disclosing, 
+                     copying, distributing or taking any action based on the contents of 
+                     this email is unauthorized and prohibited.  PORLT ENTERPRISE including 
+                     its subsidiaries and employees accept no liability for any loss, direct, 
+                     indirect or consequential, arising from information provided and actions 
+                     resulting therein.  
+                    </p>
+
+                    </div>
+                    </body>
+                    </html>';
     
     
-                <h2>
-                Sorry! Your Withdraw Request for Amount '.$amount.' naira  has just been Disapproved. Contact Admin for more information
-                </h2>
-                
-                <h3>Request Details</h3>
-                <h5>Amount Requested: N'. $amount.' </h5>
-                <h5>Customer Name: '. $name.' </h5>
-                <h5>Customer Email: '. $email.' </h5>
-                <h5>Customer Phone: '. $phone.' </h5>
-                <h3>Account Details</h3>   
-                <h5>Account Number: '. $account_num.' </h5>   
-                <h5>Account Name: '. $account_name.' </h5>   
-                <h5>Bank: '. $bank.' </h5>
-                
-                </div>
-                </body>
-                </html>';
+                if($mail->send())
+                {
+                    
+                    echo "success";
+                }else{
+                    echo "fail";
+                }
+            } catch (Exception $e) {
+                echo "fail";
+            }
+        }
+    }
+
+    if (isset($_POST['deleteState'])) {
+        $id =$_POST['deleteState'];
+        deleteState($conn, $id);
+    }
+
+    if (isset($_POST['rejectKYC'])) {
+        $id =$_POST['rejectKYC'];
+        $user = getUserById($conn, $id);
+        $reject = rejectKyc($conn, $id);
+        $email = $user['email'];
+        $username = $user['fulname'];
+        // echo $username;
+
+        if ($reject) {
+            try {
+                $mail->isSMTP();
+                $mail->Host = 'smtp.mailtrap.io';
+                $mail->SMTPAuth = true;
+                $mail->SMTPDebug  = 0;
+                $mail->Username   = "a45da6cddd10cd";                    
+                $mail->Password   = "9c297ff39a7ea9";                              
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         
+                $mail->Port       = 587;
+    
+                $mail->From = "support@diimtech.com";
+                $mail->FromName = "Porlt App";
+                $mail->addAddress($email);
+                $mail->addReplyTo("support@porlt.com");
+    
+    
+                $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+                //$mail->AddAttachment("/var/tmp/file.tar.gz");         // add attachments
+                //$mail->AddAttachment("/tmp/image.jpg", "new.jpg");    // optional name
+                $mail->IsHTML(true);                                  // set email format to HTML
+    
+                $mail->Subject = "KYC Status";
+                $mail->Body    = '<!DOCTYPE HTML>     
+                        <html>
+                    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+                    </head>
+                    <body>
+                    <div style="dbackground-color:#eee; border:solid; border-width:thin; border-color:#EEE; position: relative; font-size:15px; padding-top:2em; padding:1em; font-family:Verdana, Geneva, sans-serif">
+                    <p>
+                        Dear  '.$username.',
+                    </p>
+                    
+                    <p>
+                    We are sorry to inform you that your KYC did not pass.
+                    This may happen due to any of the following
+                    Blurry image content, incorrect details supplied on registration, blank image uploaded.
+                    </p>
+                    
+                    <p>For more information, please contact Porlt support.</p>
+                    
+
+                    <p>Kind Regards,</p>
+                    
+                    <p>Support Team.</p>
+                    
+                    <p><a href="http://www.porlt.com">porlt.com</a></p>
+                    
+                    <p>support@porlt.com</p>
+                    
+
+                    <p>Porlt - Where Senders Meet Travelers!</p>
+                    <br>
+                    <h5>DISCLAIMER:</h5>
+                    <br>
+                    <p style=" width:100%;" >
+                    This email and any attachments are for the designated recipient only
+                     and may contain confidential information. If you have received it in 
+                     error, kindly notify the sender and delete the original. Disclosing, 
+                     copying, distributing or taking any action based on the contents of 
+                     this email is unauthorized and prohibited.  PORLT ENTERPRISE including 
+                     its subsidiaries and employees accept no liability for any loss, direct, 
+                     indirect or consequential, arising from information provided and actions 
+                     resulting therein.  
+                    </p>
+                    </div>
+                    </body>
+                    </html>';
     
     
                 if($mail->send())

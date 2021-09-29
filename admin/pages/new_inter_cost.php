@@ -154,20 +154,30 @@ $weights = fetchAllWeight($conn);
         success:(res =>{
           console.log(res);
           if (res === "success") {
-            $('#inter_cost_form')[0].reset()
+            
           
             swal.fire({
-                title:'inter State Cost Added Successfully',
+                title:'Inter State Cost Added Successfully',
                 icon: res, 
             })
             $('#add_inter_state_cost').val('Add Cost')
+          }else if(res === "exist"){
+            swal.fire({
+                title:'Inter State Cost Already exist for this weight',
+                icon: "warning", 
+            })
+          }else if(res === "same"){
+            swal.fire({
+                title:'Inter State required two different states',
+                icon: "warning", 
+            })
           }else{
             $("#errorMsg").text("An Error occurred Please Try again!")
             setTimeout(() => {
               $("#errorMsg").text("")
             }, 5000);
           }
-          
+          $('#inter_cost_form')[0].reset()
         })
       })
     }

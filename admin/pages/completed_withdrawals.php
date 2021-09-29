@@ -121,7 +121,7 @@ function approve_trans(id, sid)
 var dataString='id='+id;
 $.ajax({
 type:"GET",
-url:"https://pay.diimtech.com/core/approve_withdraw.php",
+// url:"https://pay.diimtech.com/core/approve_withdraw.php",
 data:dataString,
 jsonp:"callback",
 jsonpCallback:"Sverify",

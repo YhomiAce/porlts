@@ -94,7 +94,7 @@ if (r == true) {
 var dataString='id='+id;
 $.ajax({
 type:"GET",
-url:"process/del_des_city.php",
+url:"process/del_pickup_city.php",
 data:dataString,
 jsonp:"callback",
 jsonpCallback:"Sverify",
@@ -105,7 +105,7 @@ var success = data.success;
 if(success == "Yes")
 {
 //alert("Category Deleted Successfully!");
-window.location = "?p=des_cities";
+window.location = "?p=pickup_cities";
 }
 else if (success = "No")
 {

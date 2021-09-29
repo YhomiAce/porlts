@@ -61,7 +61,7 @@ $sql=$con->query("SELECT * FROM porlt_users WHERE id = '$id'") or die("Error2 : 
     $govt_id = $rows['govt_id'];
     $date_t =$rows['date_t'];
     $status =$rows['status'];
-    
+    $kycStatus = $rows['kyc_status'];
 
     $date_t = date('d-M-Y',strtotime('+0 days',strtotime(str_replace('/', '-', $date_t))));
     
@@ -73,23 +73,106 @@ $sql=$con->query("SELECT * FROM porlt_users WHERE id = '$id'") or die("Error2 : 
   <button class="btn btn-primary">Reset Password</button> &nbsp;<button class="btn btn-primary" onclick="delete_user('<?php echo $id; ?>')">Delete</button>
 
 </td></td></td></td></td></td></td></tr>
-
-
-<tr><td style="border:solid; border-width: thin; border-color: #eee;"><td style="border:solid; border-width: thin; border-color: #eee;"><img src="https://porlt.diimtech.com/admin/users/<?php echo $pic; ?>" width = "200" height="200"><br><br> <a href="https://porlt.diimtech.com/admin/users/<?php echo $pic; ?>"> <button class="btn btn-primary">Download User Pic</button> </a>
-
-  <td style="border:solid; border-width: thin; border-color: #eee;"><img src="https://porlt.diimtech.com/admin/govt_id/<?php echo $govt_id; ?>" width = "200" height="200">
-    <br><br>
-<a href="https://porlt.diimtech.com/admin/govt_id/<?php echo $govt_id; ?>"> <button class="btn btn-primary">Download Govt Id</button> </a>
- 
- 
-  </td></td></td></td></td></tr>
-
-
 </table>
+
+<div class="row">
+  <div class="col-md-5">
+  <div class="row">
+    <div class="col-md-12">
+    <img src="users/100001843042weverifind@gmail.com.jpg" width = "200" height="200">
+    </div>
+  </div>
+  <div class="col-md-12 mt-5">
+  <a href="users/100001843042weverifind@gmail.com.jpg"> <button class="btn btn-primary mt-5">Download User Pic</button> </a>
+  </div>
+  </div>
+  <div class="col-md-5">
+  <div class="row">
+    <div class="col-md-12">
+    <img src="users/100001843042weverifind@gmail.com.jpg" width = "200" height="200">
+    </div>
+  </div>
+  <div class="col-md-12 mt-5">
+  <a href="users/100001843042weverifind@gmail.com.jpg"> <button class="btn btn-primary mt-5">Download Govt Id</button> </a>
+  </div>
+  </div>
+  <?php if($kycStatus == 0): ?>
+
+  
+  <div class="col-md-2">
+    <button class="btn btn-primary mt-5 rejectKyc" id="<?php echo $id; ?>">Reject KYC</button>
+
+  </div>
+  <?php endif; ?>
+
+
+</div>
+
+
+
+
+
 
 
 <script type="text/javascript">
 
+// Reject KYC
+
+$('body').on('click','.rejectKyc',function(e){
+  e.preventDefault()
+  var userId = $(this).attr('id');
+  console.log(userId);
+  Swal.fire({
+      title: 'Are you sure?',
+      text: "Do You want to Reject this User KYC?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Reject KYC!'
+      }).then((result) => {
+      if (result.isConfirmed) {
+          $.ajax({
+              url:'pages/config/controller.php',
+              method:'post',
+              data:{rejectKYC:userId},
+              success:(res)=>{
+                console.log(res);
+                if (res === "success") {
+                  
+                  Swal.fire({
+                    title: "KYC Rejected",
+                    icon: 'success',
+                    text: "User KYC Rejected Successfully"
+                  }).then(()=>{
+                  location.reload()
+
+                  })
+                }
+                if (res === "fail") {
+                  Swal.fire({
+                    title: "Server Error",
+                    icon: 'error',
+                    text: "Server Error Could not activate User "
+                  })
+                }
+                if (res === "verified") {
+                  Swal.fire({
+                    title: "Account Activated",
+                    icon: 'warning',
+                    text: "User Account has already been Verified!"
+                  })
+                }  
+                   
+              }
+          })
+          
+      }
+  })
+  
+})
+
+// Activate User
 $('body').on('click','.activate',function(e){
   e.preventDefault()
   var userId = $(this).attr('id');

@@ -46,12 +46,17 @@ $rows = fetchAllWithdrawal($conn);
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Action</th>
  
  <?php foreach($rows as $key=>$row): ?>
+  <?php 
+  $userId = getUserDetails($conn, $row['user'])["id"];
+  echo (fetchUserWallet($conn,$userId)['balance']);
+
+  ?>
   <tr>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?= $key+1; ?></td>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo (getUserDetails($conn, $row['user'])['fulname']); ?></td>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo (getUserDetails($conn, $row['user'])['phone']); ?></td>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $row['amount']; ?></td>
-    <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo (getUserDetails($conn, $row['user'])['wallet']); ?></td>
+    <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo (fetchUserWallet($conn,$userId)['balance']); ?></td>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $row['bank']; ?></td>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $row['account_name']; ?></td>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $row['account_num']; ?></td>

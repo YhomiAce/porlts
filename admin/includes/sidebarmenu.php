@@ -54,6 +54,9 @@
           </a>
           <ul class="treeview-menu">
       <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=customers" style="font-size: 13px;"><i class="fa fa-circle-o"></i>All Users</a></li>
+      <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=pending_kyc" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Awaiting Approval</a></li>
+      <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=approved_kyc" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Approved Users</a></li>
+      <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=rejected_kyc" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Rejected Users</a></li>
        <!-- <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=sub_categories" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Sub Categories</a></li>-->                 
          </ul>
           </li> 
@@ -71,6 +74,7 @@
 
 
   <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=pending" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Pending Packages</a></li>
+  <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=unpaid_package" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Unpdaid Packages</a></li>
   <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=accepted" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Accepted Packages</a></li>
   <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=pickups" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Pick Ups</a></li>
   <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=handovers" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Handovers</a></li>
@@ -104,6 +108,7 @@ if($level == 1)
             </span>
           </a>
          <ul class="treeview-menu">
+  <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=states" style="font-size: 13px;"><i class="fa fa-circle-o"></i>States</a></li>
   <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=pickup_cities" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Pickup Cities</a></li>
   <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=des_cities" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Destination Cities</a></li>
   <li style="font-family: verdana; font-size: 14px; font-weight: normal;"><a href="?p=intra_costs" style="font-size: 13px;"><i class="fa fa-circle-o"></i>Set Intra-State Cost</a></li>
