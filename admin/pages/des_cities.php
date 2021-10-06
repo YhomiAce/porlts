@@ -47,7 +47,7 @@ $count = mysqli_num_rows($sql);
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">NO</th>
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Cities</th>
 <!-- <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Last Name</th>-->
-<th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Areas</th>
+<!-- <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Areas</th> -->
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Date Added</th>
 <!-- <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Phone</th> 
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Date Joined</th>
@@ -72,7 +72,7 @@ $count = mysqli_num_rows($sql);
   <tr>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?= $key+1; ?></td>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $row['cities']; ?></td>
-    <td style="border:solid; border-width: thin; border-color: #eee;"><a class="btn btn-success ml-2" href="?p=des_area&stateId=<?= $row['id']; ?>">View Areas</a></td>
+    <!-- <td style="border:solid; border-width: thin; border-color: #eee;"><a class="btn btn-success ml-2" href="?p=des_area&stateId=<?= $row['id']; ?>">View Areas</a></td> -->
     <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo date('d-M-Y',strtotime('+0 days',strtotime(str_replace('/', '-', $row['date_t'])))); ?></td>
     <td style="border:solid; border-width: thin; border-color: #eee;"><button class="btn btn-primary" onclick="del_des_city('<?php echo $row['id']; ?>')">Delete</button></td>
 

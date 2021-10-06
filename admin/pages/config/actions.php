@@ -32,7 +32,7 @@
     }
 
     function savePickupArea($conn, $stateId, $area, $post_code) {
-        $sql = "INSERT INTO pickup_area(state_id, area, post_code) VALUES(?, ?, ?)";
+        $sql = "INSERT INTO areas(state_id, area, post_code) VALUES(?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $res = $stmt->execute([$stateId, $area, $post_code]);
         return true;
@@ -64,7 +64,7 @@
     }
 
     function fetchAllPickupArea($conn, $stateId) {
-        $sql = "SELECT * FROM pickup_area WHERE state_id = ?";
+        $sql = "SELECT * FROM areas WHERE state_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$stateId]);
         $result = $stmt->fetchAll();
@@ -95,7 +95,7 @@
     }
 
     function searchPickupArea($conn, $q) {
-        $sql = "SELECT * FROM pickup_area WHERE area LIKE '%$q%'";
+        $sql = "SELECT * FROM area WHERE area LIKE '%$q%'";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -103,7 +103,7 @@
     }
 
     function countPickupAreas($conn, $stateId) {
-        $sql = "SELECT * FROM pickup_area WHERE state_id = ?";
+        $sql = "SELECT * FROM areas WHERE state_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$stateId]);
         $result = $stmt->rowCount();
@@ -483,6 +483,22 @@
         $sql = "SELECT * FROM porlt_users WHERE id =:id";
         $stmt = $conn->prepare($sql);
         $stmt->execute(['id'=>$id]);
+        $result = $stmt->fetch();
+        return $result;
+    }
+
+    function getStateById($conn, $id) {
+        $sql = "SELECT * FROM states WHERE id = ? ";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    function pickupAreaDetails($conn, $id) {
+        $sql = "SELECT * FROM pickup_area WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([$id]);
         $result = $stmt->fetch();
         return $result;
     }

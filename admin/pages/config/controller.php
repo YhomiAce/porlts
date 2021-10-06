@@ -24,7 +24,7 @@
 
     if (isset($_GET['changeState'])) {
         $stateId =$_GET['changeState'];
-        $results = fetchAllDestinationStateAreas($conn, $stateId);
+        $results = fetchAllPickupArea($conn, $stateId);
         $output ="";
         if($results){
             $output .='
@@ -38,13 +38,13 @@
             </div>';
             echo $output;
         }else{
-            echo '<h6 class="text-secondary text-center">You have not add Areas for this state! <a href="?p=destination_area">Click To add Area</a> </h6>';
+            echo '<h6 class="text-secondary text-center">You have not add Areas for this state! <a href="?p=pickup_area">Click To add Area</a> </h6>';
         }
     }
 
     if (isset($_POST['changeStateDestination'])) {
         $stateId =$_POST['changeStateDestination'];
-        $results = fetchAllDestinationStateAreas($conn, $stateId);
+        $results = fetchAllPickupArea($conn, $stateId);
         $output ="";
         if($results){
             $output .='
@@ -58,7 +58,7 @@
             </div>';
             echo $output;
         }else{
-            echo '<h6 class="text-secondary text-center">You have not add Areas for this state! <a href="?p=destination_area">Click To add Area</a> </h6>';
+            echo '<h6 class="text-secondary text-center">You have not add Areas for this state! <a href="?p=pickup_area">Click To add Area</a> </h6>';
         }
     }
 
@@ -73,17 +73,17 @@
         $earned = $_POST['earned'];
         $insurance = $_POST['insurance'];
 
-        $stateDetails = destinationDetails($conn, $stateId);
-        $state = $stateDetails['cities'];
+        $stateDetails = getStateById($conn, $stateId);
+        $state = $stateDetails['name'];
 
         $kgDetails = weightDetails($conn, $kgId);
         $kg = $kgDetails['kg'];
 
-        $ori = destinationAreaDetails($conn, $originId);
+        $ori = pickupAreaDetails($conn, $originId);
         $origin = $ori['area'];
         $origin_code = $ori['post_code'];
 
-        $des = destinationAreaDetails($conn, $destinationId);
+        $des = pickupAreaDetails($conn, $destinationId);
         $destination = $des['area'];
         $destination_code = $des['post_code'];
         

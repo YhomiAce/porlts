@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
   require_once "config/conn.php";
   require_once "config/actions.php";
 
-  $states = fetchAllPickupState($conn);
+  $states = fetchAllState($conn);
 
   $msg = "";
   $msgClass = "";
@@ -25,7 +25,7 @@ ini_set('display_errors', 1);
       $save = savePickupArea($conn, $state, $area, $post_code);
       if ($save) {
         $msgClass = "success";
-        $msg = "Pickup Area saved Successfully";
+        $msg = "Area saved Successfully";
       }
     }
     
@@ -76,7 +76,7 @@ ini_set('display_errors', 1);
               <select name="pickup_state" id="pickup_state" class="form-control" >
                 <option value="" selected disabled>Select State</option>
                 <?php foreach($states as $state): ?>
-                <option value="<?= $state['id']; ?>"><?= $state['cities']; ?></option>
+                <option value="<?= $state['id']; ?>"><?= $state['name']; ?></option>
                 <?php endforeach; ?>
               </select>
             </div>

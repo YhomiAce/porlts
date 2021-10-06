@@ -16,12 +16,12 @@ ini_set('display_errors', 1);
     require_once 'config/actions.php';
     $stateId = $_GET['stateId'];
    $count = countPickupAreas($conn, $stateId);
-   $city = pickupDetails($conn, $stateId);
+   $city = getStateById($conn, $stateId);
 
 ?>
        <?php echo number_format($count); ?> Pickup Areas
       </h2>
-      <p><a href="?p=dashboard"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a href="?p=pickup_cities">Pickup Area</a> &nbsp;&nbsp;  > &nbsp;&nbsp; <a class="active"><?= $city['cities']; ?> Area</a></p>
+      <p><a href="?p=dashboard"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a href="?p=pickup_cities">Pickup Area</a> &nbsp;&nbsp;  > &nbsp;&nbsp; <a class="active"><?= $city['name']; ?> Area</a></p>
     </div>
      
      <div class="col-md-4" style="text-align: left; margin-top: 10px;">  <a href="?p=pickup_area"> <button class="btn btn-primary float-right" style="font-size: 16px; font-weight: 600;">Add Pickup Area</button></a>  </div>

@@ -20,7 +20,7 @@ $count = mysqli_num_rows($sql);
       <p><a href="#"><i class="fa fa-dashboard"></i> Home</a> &nbsp;&nbsp; > &nbsp;&nbsp; <a class="active">States</a></p>
     </div>
      <div class="col-md-4" style="text-align: left; margin-top: 10px;">  <a href="?p=new_state"> <button class="btn btn-primary" style="font-size: 16px; font-weight: 600;">Add State</button></a>  </div>
-     
+     <div class="col-md-4" style="text-align: left; margin-top: 10px;">  <a href="?p=pickup_area"> <button class="btn btn-primary" style="font-size: 16px; font-weight: 600;">Add Area</button></a>  </div>
 
     </section>
      <!-- Main content -->
@@ -45,7 +45,7 @@ $count = mysqli_num_rows($sql);
 <table class="table dtable-striped table-hover no-head-border" border="1" style="border:solid; border-color: black; border-width: thin;">
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">NO</th>
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">States</th>
- <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Date</th>
+ <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">View Area</th>
  
  <th style="border:solid; border-width: thin; border-color: #eee; color: white; background-color: #0060a0;">Delete</th>
 <?php
@@ -66,7 +66,7 @@ $count = mysqli_num_rows($sql);
   <tr>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?= $key+1; ?></td>
     <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo $row['name']; ?></td>
-    <td style="border:solid; border-width: thin; border-color: #eee;"><?php echo date('d-M-Y',strtotime('+0 days',strtotime(str_replace('/', '-', $row['created_at'])))); ?></td>
+    <td style="border:solid; border-width: thin; border-color: #eee;"><a class="btn btn-success ml-2" href="?p=pickup_location&stateId=<?= $row['id']; ?>">View Areas</a></td>
     <td style="border:solid; border-width: thin; border-color: #eee;"><button class="btn btn-primary delStateBtn" id="<?php echo $row['id']; ?>">Delete</button></td>
 
   </tr>
